@@ -12,13 +12,13 @@ export default function FocusDirectrixConstruction() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const steps = [
-    "Draw the directrix line AB",
-    "Mark focus point F at distance from directrix",
-    "Draw axis perpendicular to directrix through F",
-    "Mark points on axis using eccentricity ratio (e = 2/3)",
-    "Draw construction lines from F at various angles",
-    "For each line, mark point P such that PF/PM = e",
-    "Connect all points to form the ellipse"
+    "Draw the directrix line AB of any length",
+    "Mark focus point F at 65 mm from AB",
+    "From F, draw lines at various angles (at least 15 points, 10 mm apart)",
+    "For each line, locate point P such that PF/PM = 2/3",
+    "Mark all points P that satisfy the ratio condition",
+    "Join all points with a smooth curve",
+    "The curve formed is an ELLIPSE (since e = 2/3 < 1)"
   ];
 
   useEffect(() => {
