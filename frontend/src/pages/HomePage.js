@@ -5,7 +5,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100">
       <div className="text-center space-y-8 px-4">
         <div className="space-y-4">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-800" style={{ fontFamily: "'Spectral', serif" }}>
