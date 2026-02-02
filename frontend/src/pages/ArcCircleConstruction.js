@@ -426,8 +426,10 @@ export default function ArcCircleConstruction() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 leading-relaxed">
-                  To construct an ellipse using the <strong>Arc of Circle method</strong> (also known
-                  as Concentric Circle method) when the major and minor axes are given.
+                  To construct an ellipse passing through a given point C using the{" "}
+                  <strong>Arc of Circle method</strong> (Concentric Circle method), where point C is
+                  located using its distances from two fixed points A and B. Also draw the tangent and
+                  normal at point C.
                 </p>
               </CardContent>
             </Card>
@@ -441,22 +443,27 @@ export default function ArcCircleConstruction() {
               <CardContent>
                 <div className="space-y-3 text-gray-700">
                   <div>
-                    <strong>Major Axis (AB):</strong> 100 mm
+                    <strong>Points A and B:</strong> 100 mm apart
                   </div>
                   <div>
-                    <strong>Minor Axis (CD):</strong> 60 mm
+                    <strong>Distance AC:</strong> 75 mm
                   </div>
                   <div>
-                    <strong>Semi-Major Axis (a):</strong> 50 mm
+                    <strong>Distance BC:</strong> 60 mm
                   </div>
                   <div>
-                    <strong>Semi-Minor Axis (b):</strong> 30 mm
+                    <strong>Construction:</strong> Ellipse must pass through point C
+                  </div>
+                  <div>
+                    <strong>Additional:</strong> Draw tangent and normal at C
                   </div>
                   <div className="mt-4 p-3 bg-purple-50 rounded-lg">
                     <p className="text-sm">
-                      <strong>Note:</strong> This method uses two concentric circles with radii equal
-                      to the semi-major and semi-minor axes. Points on the ellipse are found by the
-                      intersection of horizontal and vertical lines from corresponding division points.
+                      <strong>Method:</strong> First locate point C using the given distances. Then
+                      construct the ellipse using concentric circles method where A and B lie on the
+                      major axis. The major and minor axes are calculated from the triangle geometry.
+                      Finally, draw the tangent (touching the curve at C) and normal (perpendicular to
+                      tangent at C).
                     </p>
                   </div>
                 </div>
