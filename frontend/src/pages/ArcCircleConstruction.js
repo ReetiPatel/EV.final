@@ -39,22 +39,99 @@ export default function ArcCircleConstruction() {
 
     ctx.clearRect(0, 0, width, height);
 
+    const scale = 3.77; // pixels per mm
     const centerX = width / 2;
     const centerY = height / 2;
-    const majorRadius = 200;
-    const minorRadius = 120;
+    
+    // Given: A and B are 100mm apart, C is 75mm from A and 60mm from B
+    const AB_distance = 100 * scale;
+    const AC_distance = 75 * scale;
+    const BC_distance = 60 * scale;
+    
+    // Position A and B
+    const pointA_x = centerX - AB_distance / 2;
+    const pointA_y = centerY + 80;
+    const pointB_x = centerX + AB_distance / 2;
+    const pointB_y = centerY + 80;
+    
+    // Calculate position of C using trilateration
+    // C is at intersection of circles: one centered at A (r=75mm), one at B (r=60mm)
+    const d = AB_distance;
+    const r1 = AC_distance;
+    const r2 = BC_distance;
+    const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
+    const h = Math.sqrt(r1 * r1 - a * a);
+    const pointC_x = pointA_x + a;
+    const pointC_y = pointA_y - h;
+    
+    // Calculate ellipse parameters
+    // For ellipse through A, B, C with A and B on major axis
+    const majorRadius = AB_distance / 2; // semi-major axis
+    const minorRadius = h; // semi-minor axis (height from AB to C)
     const numDivisions = 12;
 
-    // Step 0: Draw concentric circles
+    // Step 0: Mark points A and B
     if (currentStep >= 0 || !showSteps) {
-      // Outer circle
+      ctx.fillStyle = "#3b82f6";
+      ctx.beginPath();
+      ctx.arc(pointA_x, pointA_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("A", pointA_x - 15, pointA_y + 5);
+      
+      ctx.beginPath();
+      ctx.arc(pointB_x, pointB_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("B", pointB_x + 10, pointB_y + 5);
+      
+      // Draw line AB
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pointA_x, pointA_y);
+      ctx.lineTo(pointB_x, pointB_y);
+      ctx.stroke();
+      ctx.fillText("100 mm", centerX - 20, pointA_y + 20);
+    }
+
+    // Step 1-2: Draw construction arcs from A and B
+    if (showSteps && currentStep >= 1 && currentStep <= 3) {
+      ctx.strokeStyle = "#cbd5e1";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      
+      // Arc from A
+      ctx.beginPath();
+      ctx.arc(pointA_x, pointA_y, AC_distance, 0, 2 * Math.PI);
+      ctx.stroke();
+      
+      // Arc from B
+      ctx.beginPath();
+      ctx.arc(pointB_x, pointB_y, BC_distance, 0, 2 * Math.PI);
+      ctx.stroke();
+      
+      ctx.setLineDash([]);
+    }
+
+    // Step 3: Mark point C
+    if (currentStep >= 3 || !showSteps) {
+      ctx.fillStyle = "#dc2626";
+      ctx.beginPath();
+      ctx.arc(pointC_x, pointC_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = "#374151";
+      ctx.fillText("C (75mm from A, 60mm from B)", pointC_x + 10, pointC_y - 10);
+    }
+
+    // Step 4-5: Draw concentric circles
+    if (currentStep >= 4 || !showSteps) {
+      // Outer circle (semi-major axis)
       ctx.strokeStyle = "#3b82f6";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(centerX, centerY, majorRadius, 0, 2 * Math.PI);
       ctx.stroke();
 
-      // Inner circle
+      // Inner circle (semi-minor axis)
       ctx.strokeStyle = "#8b5cf6";
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -62,33 +139,25 @@ export default function ArcCircleConstruction() {
       ctx.stroke();
     }
 
-    // Step 1: Draw axes
-    if (currentStep >= 1 || !showSteps) {
+    // Step 5: Draw axes
+    if (currentStep >= 5 || !showSteps) {
       ctx.strokeStyle = "#6b7280";
       ctx.lineWidth = 1;
       ctx.setLineDash([5, 5]);
 
-      // Major axis (horizontal)
+      // Horizontal axis
       ctx.beginPath();
       ctx.moveTo(centerX - majorRadius - 20, centerY);
       ctx.lineTo(centerX + majorRadius + 20, centerY);
       ctx.stroke();
 
-      // Minor axis (vertical)
+      // Vertical axis
       ctx.beginPath();
       ctx.moveTo(centerX, centerY - minorRadius - 20);
       ctx.lineTo(centerX, centerY + minorRadius + 20);
       ctx.stroke();
 
       ctx.setLineDash([]);
-
-      // Labels
-      ctx.fillStyle = "#374151";
-      ctx.font = "14px Inter";
-      ctx.fillText("A", centerX - majorRadius - 30, centerY + 5);
-      ctx.fillText("B", centerX + majorRadius + 20, centerY + 5);
-      ctx.fillText("C", centerX - 5, centerY - minorRadius - 25);
-      ctx.fillText("D", centerX - 5, centerY + minorRadius + 35);
     }
 
     // Calculate division points
@@ -101,54 +170,41 @@ export default function ArcCircleConstruction() {
       outerPoints.push({
         x: centerX + majorRadius * Math.cos(angle),
         y: centerY + majorRadius * Math.sin(angle),
-        angle: angle,
       });
       innerPoints.push({
         x: centerX + minorRadius * Math.cos(angle),
         y: centerY + minorRadius * Math.sin(angle),
-        angle: angle,
       });
-
-      // Calculate ellipse point
       ellipsePoints.push({
         x: centerX + majorRadius * Math.cos(angle),
         y: centerY + minorRadius * Math.sin(angle),
       });
     }
 
-    // Step 2: Mark division points
-    if (currentStep >= 2 || !showSteps) {
+    // Step 6: Mark division points
+    if (currentStep >= 6 || !showSteps) {
       ctx.fillStyle = "#3b82f6";
       outerPoints.forEach((point, i) => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
         ctx.fill();
-
-        if (i % 3 === 0 && i > 0) {
-          ctx.font = "12px Inter";
-          const offsetX = point.x > centerX ? 10 : -20;
-          const offsetY = point.y > centerY ? 15 : -10;
-          ctx.fillText(i.toString(), point.x + offsetX, point.y + offsetY);
-        }
       });
 
       ctx.fillStyle = "#8b5cf6";
-      innerPoints.forEach((point, i) => {
+      innerPoints.forEach((point) => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
         ctx.fill();
       });
     }
 
-    // Step 3-5: Draw construction lines
-    if (currentStep >= 4 || !showSteps) {
-      const maxLines = showSteps ? Math.min(currentStep - 2, numDivisions) : numDivisions;
-
+    // Step 7: Draw construction lines
+    if (currentStep >= 7 || !showSteps) {
       ctx.strokeStyle = "#e5e7eb";
       ctx.lineWidth = 1;
       ctx.setLineDash([2, 2]);
 
-      for (let i = 0; i < maxLines; i++) {
+      for (let i = 0; i < numDivisions; i++) {
         // Vertical line from outer point
         ctx.beginPath();
         ctx.moveTo(outerPoints[i].x, centerY);
@@ -165,8 +221,8 @@ export default function ArcCircleConstruction() {
       ctx.setLineDash([]);
     }
 
-    // Step 6: Mark intersection points
-    if (currentStep >= 6 || !showSteps) {
+    // Step 8: Mark intersection points
+    if (currentStep >= 8 || !showSteps) {
       ctx.fillStyle = "#dc2626";
       ellipsePoints.forEach((point) => {
         ctx.beginPath();
@@ -175,8 +231,8 @@ export default function ArcCircleConstruction() {
       });
     }
 
-    // Step 7: Draw final ellipse
-    if (currentStep >= 7 || !showSteps) {
+    // Step 9: Draw final ellipse
+    if (currentStep >= 9 || !showSteps) {
       ctx.strokeStyle = "#7c3aed";
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -189,6 +245,47 @@ export default function ArcCircleConstruction() {
       });
       ctx.closePath();
       ctx.stroke();
+    }
+
+    // Step 10: Draw tangent and normal at C
+    if (currentStep >= 10 || !showSteps) {
+      // Calculate tangent slope at C
+      // For ellipse: (x/a)² + (y/b)² = 1, slope = -(b²x)/(a²y)
+      const relC_x = pointC_x - centerX;
+      const relC_y = pointC_y - centerY;
+      const tangentSlope = -(minorRadius * minorRadius * relC_x) / (majorRadius * majorRadius * relC_y);
+      
+      // Draw tangent line
+      ctx.strokeStyle = "#10b981";
+      ctx.lineWidth = 2;
+      const tangentLength = 150;
+      const tangentAngle = Math.atan(tangentSlope);
+      ctx.beginPath();
+      ctx.moveTo(pointC_x - tangentLength * Math.cos(tangentAngle), 
+                 pointC_y - tangentLength * Math.sin(tangentAngle));
+      ctx.lineTo(pointC_x + tangentLength * Math.cos(tangentAngle), 
+                 pointC_y + tangentLength * Math.sin(tangentAngle));
+      ctx.stroke();
+      
+      ctx.fillStyle = "#10b981";
+      ctx.fillText("Tangent", pointC_x + tangentLength * Math.cos(tangentAngle) - 40, 
+                   pointC_y + tangentLength * Math.sin(tangentAngle) - 10);
+      
+      // Draw normal (perpendicular to tangent)
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 2;
+      const normalAngle = tangentAngle + Math.PI / 2;
+      const normalLength = 100;
+      ctx.beginPath();
+      ctx.moveTo(pointC_x - normalLength * Math.cos(normalAngle), 
+                 pointC_y - normalLength * Math.sin(normalAngle));
+      ctx.lineTo(pointC_x + normalLength * Math.cos(normalAngle), 
+                 pointC_y + normalLength * Math.sin(normalAngle));
+      ctx.stroke();
+      
+      ctx.fillStyle = "#f59e0b";
+      ctx.fillText("Normal", pointC_x + normalLength * Math.cos(normalAngle) - 10, 
+                   pointC_y + normalLength * Math.sin(normalAngle) + 20);
     }
   };
 
