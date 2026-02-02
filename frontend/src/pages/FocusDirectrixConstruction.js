@@ -313,8 +313,9 @@ export default function FocusDirectrixConstruction() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 leading-relaxed">
-                  To construct an ellipse using the <strong>Focus and Directrix method</strong> when
-                  the distance of the focus from the directrix and eccentricity are given.
+                  To construct an ellipse using the <strong>Focus and Directrix method</strong> by
+                  tracing the path of a point P that maintains a constant ratio (2:3) between its
+                  distance from focus F and its perpendicular distance from directrix AB.
                 </p>
               </CardContent>
             </Card>
@@ -328,16 +329,23 @@ export default function FocusDirectrixConstruction() {
               <CardContent>
                 <div className="space-y-3 text-gray-700">
                   <div>
-                    <strong>Eccentricity (e):</strong> 2/3
+                    <strong>Distance of F from AB:</strong> 65 mm
                   </div>
                   <div>
-                    <strong>Distance from Focus to Directrix:</strong> 120 mm
+                    <strong>Ratio (PF : PM):</strong> 2 : 3
+                  </div>
+                  <div>
+                    <strong>Eccentricity (e):</strong> 2/3 = 0.667
+                  </div>
+                  <div>
+                    <strong>Points to plot:</strong> At least 15 points, 10 mm apart
                   </div>
                   <div className="mt-4 p-3 bg-blue-50 rounded-lg">
                     <p className="text-sm">
-                      <strong>Note:</strong> For an ellipse, the eccentricity is always less than 1.
-                      The ratio PF/PM = e, where P is any point on the ellipse, F is the focus, and M
-                      is the foot of perpendicular from P to the directrix.
+                      <strong>Note:</strong> Since eccentricity e = 2/3 {'<'} 1, the curve formed is an
+                      <strong> ELLIPSE</strong>. The ratio PF/PM = e is constant for all points on the curve,
+                      where P is any point on the ellipse, F is the focus, and M is the foot of
+                      perpendicular from P to the directrix AB.
                     </p>
                   </div>
                 </div>
