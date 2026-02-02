@@ -35,94 +35,122 @@ export default function FocusDirectrixConstruction() {
 
     ctx.clearRect(0, 0, width, height);
 
-    // Setup parameters
+    // Setup parameters (65mm = ~245px at scale, distance between points ~10mm = ~38px)
+    const scale = 3.77; // pixels per mm
     const centerX = width / 2;
     const centerY = height / 2;
-    const directrixX = centerX - 250;
-    const focusX = centerX + 50;
+    const directrixX = centerX - 180;
+    const focusDistance = 65 * scale; // 65mm
+    const focusX = directrixX + focusDistance;
     const focusY = centerY;
     const eccentricity = 2 / 3;
+    const numPoints = 24; // At least 15 points
+    const pointSpacing = 10 * scale; // 10mm apart
 
-    // Step 0: Draw directrix
+    // Step 0: Draw directrix AB
     if (currentStep >= 0 || !showSteps) {
       ctx.strokeStyle = "#4f46e5";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(directrixX, centerY - 200);
-      ctx.lineTo(directrixX, centerY + 200);
+      ctx.moveTo(directrixX, centerY - 220);
+      ctx.lineTo(directrixX, centerY + 220);
       ctx.stroke();
 
       ctx.fillStyle = "#4f46e5";
       ctx.font = "14px Inter";
-      ctx.fillText("Directrix", directrixX - 60, centerY - 210);
+      ctx.fillText("A", directrixX - 5, centerY - 230);
+      ctx.fillText("B", directrixX - 5, centerY + 240);
+      ctx.fillText("Directrix AB", directrixX - 70, centerY - 240);
     }
 
-    // Step 1: Draw focus
+    // Step 1: Draw focus F at 65mm from AB
     if (currentStep >= 1 || !showSteps) {
       ctx.fillStyle = "#dc2626";
       ctx.beginPath();
       ctx.arc(focusX, focusY, 5, 0, 2 * Math.PI);
       ctx.fill();
-      ctx.fillText("F (Focus)", focusX + 10, focusY - 10);
+      ctx.fillText("F (65mm from AB)", focusX + 10, focusY - 10);
+      
+      // Draw dimension line
+      if (showSteps && currentStep >= 1) {
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(directrixX, focusY);
+        ctx.lineTo(focusX, focusY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
     }
 
-    // Step 2: Draw axis
+    // Step 2-5: Calculate and draw points
     if (currentStep >= 2 || !showSteps) {
-      ctx.strokeStyle = "#94a3b8";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([5, 5]);
-      ctx.beginPath();
-      ctx.moveTo(directrixX, centerY);
-      ctx.lineTo(centerX + 300, centerY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-
-    // Step 3-6: Draw construction and ellipse
-    if (currentStep >= 3 || !showSteps) {
       const points = [];
-      const numPoints = 36;
 
+      // Calculate points where PF/PM = 2/3
       for (let i = 0; i < numPoints; i++) {
         const angle = (i * 2 * Math.PI) / numPoints;
         const dirX = Math.cos(angle);
         const dirY = Math.sin(angle);
 
         // Find point P such that PF/PM = eccentricity
-        for (let r = 10; r < 400; r += 1) {
+        for (let r = 10; r < 350; r += 1) {
           const px = focusX + dirX * r;
           const py = focusY + dirY * r;
 
           const pf = Math.sqrt((px - focusX) ** 2 + (py - focusY) ** 2);
           const pm = Math.abs(px - directrixX);
 
-          if (Math.abs(pf / pm - eccentricity) < 0.01) {
+          if (pm > 0 && Math.abs(pf / pm - eccentricity) < 0.01) {
             points.push({ x: px, y: py });
             break;
           }
         }
       }
 
-      // Draw construction lines (only if showing steps)
-      if (showSteps && currentStep >= 4) {
+      // Step 3: Draw construction lines from F
+      if (showSteps && currentStep >= 2) {
         ctx.strokeStyle = "#e2e8f0";
         ctx.lineWidth = 0.5;
-        points.slice(0, Math.min(8, points.length)).forEach((point) => {
+        const linesToShow = Math.min(12, points.length);
+        for (let i = 0; i < linesToShow; i++) {
+          const point = points[Math.floor((i * points.length) / linesToShow)];
           ctx.beginPath();
           ctx.moveTo(focusX, focusY);
           ctx.lineTo(point.x, point.y);
           ctx.stroke();
+        }
+      }
 
-          // Draw perpendicular to directrix
+      // Step 4: Draw perpendiculars to show PM
+      if (showSteps && currentStep >= 3) {
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 0.5;
+        const linesToShow = Math.min(8, points.length);
+        for (let i = 0; i < linesToShow; i++) {
+          const point = points[Math.floor((i * points.length) / linesToShow)];
           ctx.beginPath();
           ctx.moveTo(point.x, point.y);
           ctx.lineTo(directrixX, point.y);
           ctx.stroke();
+        }
+      }
+
+      // Step 5: Mark points P
+      if (currentStep >= 4 || !showSteps) {
+        ctx.fillStyle = "#dc2626";
+        points.forEach((point, i) => {
+          if (i % 2 === 0) { // Show every other point for clarity
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+            ctx.fill();
+          }
         });
       }
 
-      // Draw ellipse
-      if (currentStep >= 6 || !showSteps) {
+      // Step 6: Draw the ellipse curve
+      if (currentStep >= 5 || !showSteps) {
         ctx.strokeStyle = "#7c3aed";
         ctx.lineWidth = 3;
         ctx.beginPath();
@@ -135,6 +163,15 @@ export default function FocusDirectrixConstruction() {
         });
         ctx.closePath();
         ctx.stroke();
+      }
+
+      // Step 7: Label the curve
+      if (currentStep >= 6 || !showSteps) {
+        ctx.fillStyle = "#7c3aed";
+        ctx.font = "bold 16px Inter";
+        ctx.fillText("ELLIPSE", centerX + 80, centerY - 150);
+        ctx.font = "14px Inter";
+        ctx.fillText("(e = 2/3 < 1)", centerX + 80, centerY - 130);
       }
     }
   };
