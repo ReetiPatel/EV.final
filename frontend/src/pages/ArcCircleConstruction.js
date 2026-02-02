@@ -12,14 +12,17 @@ export default function ArcCircleConstruction() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const steps = [
-    "Draw two concentric circles with radii equal to semi-major and semi-minor axes",
-    "Draw the major axis AB and minor axis CD",
-    "Divide both circles into equal number of parts (12 parts)",
-    "Mark division points on outer circle as 1, 2, 3... and on inner circle as 1', 2', 3'...",
-    "From points on outer circle, draw vertical lines downward",
-    "From corresponding points on inner circle, draw horizontal lines",
-    "Mark intersection points - these lie on the ellipse",
-    "Join all intersection points with a smooth curve to complete the ellipse"
+    "Mark points A and B, 100 mm apart",
+    "Using compass, draw arc from A with radius 75 mm",
+    "Draw arc from B with radius 60 mm",
+    "Mark intersection point C where both arcs meet",
+    "Calculate major and minor axes from triangle geometry",
+    "Draw two concentric circles with calculated radii",
+    "Divide circles into equal parts and mark division points",
+    "Draw vertical lines from outer circle and horizontal from inner circle",
+    "Mark intersection points - these form the ellipse",
+    "Join all points with smooth curve passing through C",
+    "Draw tangent and normal at point C"
   ];
 
   useEffect(() => {
