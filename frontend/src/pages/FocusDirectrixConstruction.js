@@ -40,8 +40,8 @@ export default function FocusDirectrixConstruction() {
     ctx.clearRect(0, 0, width, height);
 
     // Setup parameters based on exact specifications
-    const scale = 2.5; // pixels per mm (adjusted for 800px canvas)
-    const centerX = 150;
+    const scale = 3.0; // pixels per mm (adjusted for larger 1000px canvas)
+    const centerX = 180;
     const centerY = height / 2;
     
     // Given measurements in mm
@@ -50,7 +50,7 @@ export default function FocusDirectrixConstruction() {
     const R_to_F = 65 * scale;
     const V_perpendicular = 26 * scale;
     const angled_line_length = 270 * scale;
-    const num_parallel_lines = 15;
+    const num_parallel_lines = 16; // Updated to 16
     const parallel_spacing = 10 * scale;
 
     // Key points
