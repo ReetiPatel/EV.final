@@ -478,20 +478,23 @@ export default function ArcCircleConstruction() {
                   {showSteps && (
                     <>
                       <Button
-                        data-testid="animate-btn"
-                        onClick={handleStepAnimation}
+                        data-testid="prev-step-btn"
+                        onClick={prevStep}
                         variant="outline"
+                        disabled={currentStep === 0}
                         className="inline-flex items-center gap-2"
                       >
-                        {isAnimating ? (
-                          <>
-                            <Pause className="w-4 h-4" /> Pause
-                          </>
-                        ) : (
-                          <>
-                            <Play className="w-4 h-4" /> Animate
-                          </>
-                        )}
+                        <RotateCcw className="w-4 h-4" /> Previous Step
+                      </Button>
+
+                      <Button
+                        data-testid="next-step-btn"
+                        onClick={nextStep}
+                        variant="outline"
+                        disabled={currentStep === steps.length - 1}
+                        className="inline-flex items-center gap-2"
+                      >
+                        Next Step <Play className="w-4 h-4" />
                       </Button>
 
                       <Button
@@ -502,6 +505,12 @@ export default function ArcCircleConstruction() {
                       >
                         <RotateCcw className="w-4 h-4" /> Reset
                       </Button>
+                      
+                      <div className="flex items-center px-4 py-2 bg-pink-50 rounded-lg">
+                        <span className="text-sm font-medium text-pink-700">
+                          Step {currentStep + 1} of {steps.length}
+                        </span>
+                      </div>
                     </>
                   )}
                 </div>
