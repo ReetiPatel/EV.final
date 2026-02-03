@@ -203,7 +203,7 @@ export default function FocusDirectrixConstruction() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <Button
