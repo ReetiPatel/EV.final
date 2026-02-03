@@ -289,7 +289,7 @@ export default function FocusDirectrixConstruction() {
                           data-testid={`step-${index}`}
                           className={`p-3 rounded-lg transition-all duration-300 ${
                             index <= currentStep
-                              ? "bg-indigo-100 border-l-4 border-indigo-600"
+                              ? "bg-rose-100 border-l-4 border-rose-600"
                               : "bg-gray-50"
                           }`}
                         >
