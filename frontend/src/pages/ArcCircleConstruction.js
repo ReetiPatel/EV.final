@@ -402,7 +402,7 @@ export default function ArcCircleConstruction() {
                           data-testid={`step-${index}`}
                           className={`p-3 rounded-lg transition-all duration-300 ${
                             index <= currentStep
-                              ? "bg-purple-100 border-l-4 border-purple-600"
+                              ? "bg-pink-100 border-l-4 border-pink-600"
                               : "bg-gray-50"
                           }`}
                         >
