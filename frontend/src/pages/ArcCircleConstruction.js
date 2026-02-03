@@ -40,24 +40,28 @@ export default function ArcCircleConstruction() {
 
     ctx.clearRect(0, 0, width, height);
 
-    const scale = 3.77; // pixels per mm
+    const scale = 3.5; // pixels per mm
     const centerX = width / 2;
     const centerY = height / 2;
     
-    // Given: A and B are 100mm apart, C is 75mm from A and 60mm from B
-    const AB_distance = 100 * scale;
+    // Given measurements
+    const AB_length = 100 * scale;
     const AC_distance = 75 * scale;
     const BC_distance = 60 * scale;
+    const perpendicular_length = 60 * scale;
+    const extension_length = 17.5 * scale;
+    const point_spacing = 10 * scale;
     
-    // Position A and B
-    const pointA_x = centerX - AB_distance / 2;
-    const pointA_y = centerY + 80;
-    const pointB_x = centerX + AB_distance / 2;
-    const pointB_y = centerY + 80;
+    // Key points
+    const pointA_x = centerX - AB_length / 2;
+    const pointA_y = centerY + 100;
+    const pointB_x = centerX + AB_length / 2;
+    const pointB_y = centerY + 100;
+    const pointO_x = centerX;
+    const pointO_y = centerY + 100;
     
-    // Calculate position of C using trilateration
-    // C is at intersection of circles: one centered at A (r=75mm), one at B (r=60mm)
-    const d = AB_distance;
+    // Calculate point C using trilateration
+    const d = AB_length;
     const r1 = AC_distance;
     const r2 = BC_distance;
     const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
@@ -65,228 +69,246 @@ export default function ArcCircleConstruction() {
     const pointC_x = pointA_x + a;
     const pointC_y = pointA_y - h;
     
-    // Calculate ellipse parameters
-    // For ellipse through A, B, C with A and B on major axis
-    const majorRadius = AB_distance / 2; // semi-major axis
-    const minorRadius = h; // semi-minor axis (height from AB to C)
-    const numDivisions = 12;
-
-    // Step 0: Mark points A and B
+    // Extended points
+    const pointA_prime_x = pointA_x - extension_length;
+    const pointA_prime_y = pointA_y;
+    const pointB_prime_x = pointB_x + extension_length;
+    const pointB_prime_y = pointB_y;
+    
+    // Step 0: Draw horizontal line AB
     if (currentStep >= 0 || !showSteps) {
-      ctx.fillStyle = "#f43f5e";
-      ctx.beginPath();
-      ctx.arc(pointA_x, pointA_y, 5, 0, 2 * Math.PI);
-      ctx.fill();
-      ctx.fillText("A", pointA_x - 15, pointA_y + 5);
-      
-      ctx.beginPath();
-      ctx.arc(pointB_x, pointB_y, 5, 0, 2 * Math.PI);
-      ctx.fill();
-      ctx.fillText("B", pointB_x + 10, pointB_y + 5);
-      
-      // Draw line AB
-      ctx.strokeStyle = "#94a3b8";
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = "#f43f5e";
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(pointA_x, pointA_y);
       ctx.lineTo(pointB_x, pointB_y);
       ctx.stroke();
-      ctx.fillText("100 mm", centerX - 20, pointA_y + 20);
-    }
-
-    // Step 1-2: Draw construction arcs from A and B
-    if (showSteps && currentStep >= 1 && currentStep <= 3) {
-      ctx.strokeStyle = "#cbd5e1";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 3]);
       
-      // Arc from A
+      ctx.fillStyle = "#f43f5e";
+      ctx.font = "14px Inter";
       ctx.beginPath();
-      ctx.arc(pointA_x, pointA_y, AC_distance, 0, 2 * Math.PI);
-      ctx.stroke();
+      ctx.arc(pointA_x, pointA_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("A", pointA_x - 20, pointA_y + 5);
       
-      // Arc from B
       ctx.beginPath();
-      ctx.arc(pointB_x, pointB_y, BC_distance, 0, 2 * Math.PI);
-      ctx.stroke();
-      
-      ctx.setLineDash([]);
+      ctx.arc(pointB_x, pointB_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("B", pointB_x + 15, pointB_y + 5);
     }
-
-    // Step 3: Mark point C
-    if (currentStep >= 3 || !showSteps) {
-      ctx.fillStyle = "#dc2626";
+    
+    // Step 1: Mark point C and form triangle
+    if (currentStep >= 1 || !showSteps) {
+      ctx.fillStyle = "#10b981";
       ctx.beginPath();
       ctx.arc(pointC_x, pointC_y, 5, 0, 2 * Math.PI);
       ctx.fill();
-      ctx.fillStyle = "#374151";
-      ctx.fillText("C (75mm from A, 60mm from B)", pointC_x + 10, pointC_y - 10);
-    }
-
-    // Step 4-5: Draw concentric circles
-    if (currentStep >= 4 || !showSteps) {
-      // Outer circle (semi-major axis)
-      ctx.strokeStyle = "#f43f5e";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, majorRadius, 0, 2 * Math.PI);
-      ctx.stroke();
-
-      // Inner circle (semi-minor axis)
-      ctx.strokeStyle = "#ec4899";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, minorRadius, 0, 2 * Math.PI);
-      ctx.stroke();
-    }
-
-    // Step 5: Draw axes
-    if (currentStep >= 5 || !showSteps) {
-      ctx.strokeStyle = "#6b7280";
+      ctx.fillText("C", pointC_x + 10, pointC_y - 10);
+      
+      // Draw triangle
+      ctx.strokeStyle = "#cbd5e1";
       ctx.lineWidth = 1;
-      ctx.setLineDash([5, 5]);
-
-      // Horizontal axis
+      ctx.setLineDash([3, 3]);
       ctx.beginPath();
-      ctx.moveTo(centerX - majorRadius - 20, centerY);
-      ctx.lineTo(centerX + majorRadius + 20, centerY);
+      ctx.moveTo(pointA_x, pointA_y);
+      ctx.lineTo(pointC_x, pointC_y);
+      ctx.lineTo(pointB_x, pointB_y);
       ctx.stroke();
-
-      // Vertical axis
-      ctx.beginPath();
-      ctx.moveTo(centerX, centerY - minorRadius - 20);
-      ctx.lineTo(centerX, centerY + minorRadius + 20);
-      ctx.stroke();
-
       ctx.setLineDash([]);
     }
-
-    // Calculate division points
-    const outerPoints = [];
-    const innerPoints = [];
-    const ellipsePoints = [];
-
-    for (let i = 0; i < numDivisions; i++) {
-      const angle = (i * 2 * Math.PI) / numDivisions;
-      outerPoints.push({
-        x: centerX + majorRadius * Math.cos(angle),
-        y: centerY + majorRadius * Math.sin(angle),
-      });
-      innerPoints.push({
-        x: centerX + minorRadius * Math.cos(angle),
-        y: centerY + minorRadius * Math.sin(angle),
-      });
-      ellipsePoints.push({
-        x: centerX + majorRadius * Math.cos(angle),
-        y: centerY + minorRadius * Math.sin(angle),
-      });
-    }
-
-    // Step 6: Mark division points
-    if (currentStep >= 6 || !showSteps) {
-      ctx.fillStyle = "#f43f5e";
-      outerPoints.forEach((point, i) => {
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
-        ctx.fill();
-      });
-
+    
+    // Step 2: Draw perpendicular from O
+    if (currentStep >= 2 || !showSteps) {
       ctx.fillStyle = "#ec4899";
-      innerPoints.forEach((point) => {
+      ctx.beginPath();
+      ctx.arc(pointO_x, pointO_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("O", pointO_x - 20, pointO_y + 5);
+      
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(pointO_x, pointO_y - perpendicular_length);
+      ctx.lineTo(pointO_x, pointO_y + perpendicular_length);
+      ctx.stroke();
+    }
+    
+    // Step 3: Mark A' and B'
+    if (currentStep >= 3 || !showSteps) {
+      ctx.fillStyle = "#6366f1";
+      ctx.beginPath();
+      ctx.arc(pointA_prime_x, pointA_prime_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("A'", pointA_prime_x - 25, pointA_prime_y + 5);
+      
+      ctx.beginPath();
+      ctx.arc(pointB_prime_x, pointB_prime_y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("B'", pointB_prime_x + 15, pointB_prime_y + 5);
+    }
+    
+    // Step 4: Mark points 1,2,3,4 between A and O
+    const markedPoints = [];
+    if (currentStep >= 4 || !showSteps) {
+      ctx.fillStyle = "#8b5cf6";
+      ctx.font = "12px Inter";
+      for (let i = 1; i <= 4; i++) {
+        const point_x = pointA_x + i * point_spacing;
+        const point_y = pointA_y;
+        markedPoints.push({ x: point_x, y: point_y, num: i });
+        
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.arc(point_x, point_y, 4, 0, 2 * Math.PI);
         ctx.fill();
+        ctx.fillText(i.toString(), point_x - 5, point_y + 20);
+      }
+    }
+    
+    // Steps 5-9: Draw arcs for points 1,2,3,4
+    const ellipsePoints = [];
+    
+    if (currentStep >= 5 || !showSteps) {
+      markedPoints.forEach((point, idx) => {
+        const showArcs = showSteps && currentStep >= 5 && currentStep <= 8 && currentStep - 5 === idx;
+        
+        // Calculate radii
+        const radiusA = Math.sqrt(Math.pow(pointA_prime_x - point.x, 2) + Math.pow(pointA_prime_y - point.y, 2));
+        const radiusB = Math.sqrt(Math.pow(pointB_prime_x - point.x, 2) + Math.pow(pointB_prime_y - point.y, 2));
+        
+        // Draw construction arcs if showing steps
+        if (showArcs || (!showSteps && idx === 0)) {
+          ctx.strokeStyle = "#e9d5ff";
+          ctx.lineWidth = 0.5;
+          ctx.setLineDash([2, 2]);
+          
+          // Arc from A
+          ctx.beginPath();
+          ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.stroke();
+          
+          // Arc from B
+          ctx.beginPath();
+          ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.stroke();
+          
+          ctx.setLineDash([]);
+        }
+        
+        // Calculate intersection points
+        const dx = pointB_x - pointA_x;
+        const dy = pointB_y - pointA_y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        const a = (radiusA * radiusA - radiusB * radiusB + d * d) / (2 * d);
+        const h = Math.sqrt(Math.max(0, radiusA * radiusA - a * a));
+        
+        const cx = pointA_x + (dx * a) / d;
+        const cy = pointA_y + (dy * a) / d;
+        
+        const intersect1_x = cx + (h * dy) / d;
+        const intersect1_y = cy - (h * dx) / d;
+        const intersect2_x = cx - (h * dy) / d;
+        const intersect2_y = cy + (h * dx) / d;
+        
+        ellipsePoints.push({ x: intersect1_x, y: intersect1_y });
+        ellipsePoints.push({ x: intersect2_x, y: intersect2_y });
       });
     }
-
-    // Step 7: Draw construction lines
-    if (currentStep >= 7 || !showSteps) {
-      ctx.strokeStyle = "#e5e7eb";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([2, 2]);
-
-      for (let i = 0; i < numDivisions; i++) {
-        // Vertical line from outer point
+    
+    // Step 10: Minor axis arcs
+    if (currentStep >= 9 || !showSteps) {
+      const radiusMinor = Math.sqrt(Math.pow(pointA_prime_x - pointO_x, 2) + Math.pow(pointA_prime_y - pointO_y, 2));
+      
+      // Intersection with vertical line
+      const top_y = pointO_y - perpendicular_length;
+      const bottom_y = pointO_y + perpendicular_length;
+      
+      ellipsePoints.push({ x: pointO_x, y: top_y });
+      ellipsePoints.push({ x: pointO_x, y: bottom_y });
+      
+      // Draw arcs if showing steps
+      if (showSteps && currentStep === 9) {
+        ctx.strokeStyle = "#e9d5ff";
+        ctx.lineWidth = 0.5;
+        ctx.setLineDash([2, 2]);
         ctx.beginPath();
-        ctx.moveTo(outerPoints[i].x, centerY);
-        ctx.lineTo(outerPoints[i].x, outerPoints[i].y);
+        ctx.arc(pointA_x, pointA_y, radiusMinor, Math.PI * 1.3, Math.PI * 1.7);
         ctx.stroke();
-
-        // Horizontal line from inner point
         ctx.beginPath();
-        ctx.moveTo(centerX, innerPoints[i].y);
-        ctx.lineTo(innerPoints[i].x, innerPoints[i].y);
+        ctx.arc(pointB_x, pointB_y, radiusMinor, Math.PI * 1.3, Math.PI * 1.7);
         ctx.stroke();
+        ctx.setLineDash([]);
       }
-
-      ctx.setLineDash([]);
     }
-
-    // Step 8: Mark intersection points
+    
+    // Step 11: Corner arcs (A' to A, B' to A distances)
+    if (currentStep >= 10 || !showSteps) {
+      const radiusAA = Math.sqrt(Math.pow(pointA_prime_x - pointA_x, 2) + Math.pow(pointA_prime_y - pointA_y, 2));
+      const radiusBA = Math.sqrt(Math.pow(pointB_prime_x - pointA_x, 2) + Math.pow(pointB_prime_y - pointA_y, 2));
+      
+      // Calculate intersections
+      const dx = pointB_x - pointA_x;
+      const d = Math.abs(dx);
+      const a = (radiusAA * radiusAA - radiusBA * radiusBA + d * d) / (2 * d);
+      const h = Math.sqrt(Math.max(0, radiusAA * radiusAA - a * a));
+      
+      ellipsePoints.push({ x: pointA_x + a, y: pointA_y - h });
+      ellipsePoints.push({ x: pointA_x + a, y: pointA_y + h });
+    }
+    
+    // Mark all ellipse points
     if (currentStep >= 8 || !showSteps) {
       ctx.fillStyle = "#dc2626";
       ellipsePoints.forEach((point) => {
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 4, 0, 2 * Math.PI);
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
         ctx.fill();
       });
     }
-
-    // Step 9: Draw final ellipse
-    if (currentStep >= 9 || !showSteps) {
-      ctx.strokeStyle = "#ec4899";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ellipsePoints.forEach((point, i) => {
-        if (i === 0) {
-          ctx.moveTo(point.x, point.y);
-        } else {
-          ctx.lineTo(point.x, point.y);
+    
+    // Step 12: Draw smooth ellipse
+    if (currentStep >= 11 || !showSteps) {
+      // Separate and sort points
+      const upperPoints = ellipsePoints.filter(p => p.y < pointO_y).sort((a, b) => a.x - b.x);
+      const lowerPoints = ellipsePoints.filter(p => p.y >= pointO_y).sort((a, b) => b.x - a.x);
+      const allPoints = [...upperPoints, ...lowerPoints];
+      
+      if (allPoints.length > 3) {
+        ctx.strokeStyle = "#ec4899";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(allPoints[0].x, allPoints[0].y);
+        
+        // Draw smooth curve using Catmull-Rom
+        for (let i = 0; i < allPoints.length; i++) {
+          const p0 = allPoints[(i - 1 + allPoints.length) % allPoints.length];
+          const p1 = allPoints[i];
+          const p2 = allPoints[(i + 1) % allPoints.length];
+          const p3 = allPoints[(i + 2) % allPoints.length];
+          
+          const cp1x = p1.x + (p2.x - p0.x) / 6;
+          const cp1y = p1.y + (p2.y - p0.y) / 6;
+          const cp2x = p2.x - (p3.x - p1.x) / 6;
+          const cp2y = p2.y - (p3.y - p1.y) / 6;
+          
+          ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
         }
-      });
-      ctx.closePath();
-      ctx.stroke();
-    }
-
-    // Step 10: Draw tangent and normal at C
-    if (currentStep >= 10 || !showSteps) {
-      // Calculate tangent slope at C
-      // For ellipse: (x/a)² + (y/b)² = 1, slope = -(b²x)/(a²y)
-      const relC_x = pointC_x - centerX;
-      const relC_y = pointC_y - centerY;
-      const tangentSlope = -(minorRadius * minorRadius * relC_x) / (majorRadius * majorRadius * relC_y);
-      
-      // Draw tangent line
-      ctx.strokeStyle = "#10b981";
-      ctx.lineWidth = 2;
-      const tangentLength = 150;
-      const tangentAngle = Math.atan(tangentSlope);
-      ctx.beginPath();
-      ctx.moveTo(pointC_x - tangentLength * Math.cos(tangentAngle), 
-                 pointC_y - tangentLength * Math.sin(tangentAngle));
-      ctx.lineTo(pointC_x + tangentLength * Math.cos(tangentAngle), 
-                 pointC_y + tangentLength * Math.sin(tangentAngle));
-      ctx.stroke();
-      
-      ctx.fillStyle = "#10b981";
-      ctx.fillText("Tangent", pointC_x + tangentLength * Math.cos(tangentAngle) - 40, 
-                   pointC_y + tangentLength * Math.sin(tangentAngle) - 10);
-      
-      // Draw normal (perpendicular to tangent)
-      ctx.strokeStyle = "#f59e0b";
-      ctx.lineWidth = 2;
-      const normalAngle = tangentAngle + Math.PI / 2;
-      const normalLength = 100;
-      ctx.beginPath();
-      ctx.moveTo(pointC_x - normalLength * Math.cos(normalAngle), 
-                 pointC_y - normalLength * Math.sin(normalAngle));
-      ctx.lineTo(pointC_x + normalLength * Math.cos(normalAngle), 
-                 pointC_y + normalLength * Math.sin(normalAngle));
-      ctx.stroke();
-      
-      ctx.fillStyle = "#f59e0b";
-      ctx.fillText("Normal", pointC_x + normalLength * Math.cos(normalAngle) - 10, 
-                   pointC_y + normalLength * Math.sin(normalAngle) + 20);
+        
+        ctx.closePath();
+        ctx.stroke();
+        
+        // Label
+        ctx.fillStyle = "#ec4899";
+        ctx.font = "bold 16px Inter";
+        ctx.fillText("ELLIPSE", centerX - 50, centerY - 150);
+        ctx.font = "12px Inter";
+        ctx.fillText("(Smooth curve)", centerX - 50, centerY - 130);
+      }
     }
   };
 
