@@ -244,7 +244,7 @@ export default function FocusDirectrixConstruction() {
                       if (!showSteps) setCurrentStep(0);
                     }}
                     variant={showSteps ? "default" : "outline"}
-                    className={showSteps ? "bg-indigo-600 hover:bg-indigo-700" : ""}
+                    className={showSteps ? "bg-rose-500 hover:bg-rose-600" : ""}
                   >
                     {showSteps ? "Hide Steps" : "Show Step-by-Step"}
                   </Button>
