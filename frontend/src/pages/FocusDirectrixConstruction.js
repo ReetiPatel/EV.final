@@ -151,7 +151,7 @@ export default function FocusDirectrixConstruction() {
 
       // Step 6: Draw the ellipse curve
       if (currentStep >= 5 || !showSteps) {
-        ctx.strokeStyle = "#7c3aed";
+        ctx.strokeStyle = "#ec4899";
         ctx.lineWidth = 3;
         ctx.beginPath();
         points.forEach((point, i) => {
@@ -167,7 +167,7 @@ export default function FocusDirectrixConstruction() {
 
       // Step 7: Label the curve
       if (currentStep >= 6 || !showSteps) {
-        ctx.fillStyle = "#7c3aed";
+        ctx.fillStyle = "#ec4899";
         ctx.font = "bold 16px Inter";
         ctx.fillText("ELLIPSE", centerX + 80, centerY - 150);
         ctx.font = "14px Inter";
