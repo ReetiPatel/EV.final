@@ -143,14 +143,29 @@ export default function ArcCircleConstruction() {
     }
     
     // Step 4: Mark points 1,2,3,4 between A and O
-    const markedPoints = [];
+    const markedPointsLeft = [];
+    const markedPointsRight = [];
     if (currentStep >= 4 || !showSteps) {
       ctx.fillStyle = "#8b5cf6";
       ctx.font = "12px Inter";
+      
+      // Points from A to O (left side)
       for (let i = 1; i <= 4; i++) {
         const point_x = pointA_x + i * point_spacing;
         const point_y = pointA_y;
-        markedPoints.push({ x: point_x, y: point_y, num: i });
+        markedPointsLeft.push({ x: point_x, y: point_y, num: i });
+        
+        ctx.beginPath();
+        ctx.arc(point_x, point_y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText(i.toString(), point_x - 5, point_y + 20);
+      }
+      
+      // Points from B to O (right side) - mirror positions
+      for (let i = 1; i <= 4; i++) {
+        const point_x = pointB_x - i * point_spacing;
+        const point_y = pointB_y;
+        markedPointsRight.push({ x: point_x, y: point_y, num: i });
         
         ctx.beginPath();
         ctx.arc(point_x, point_y, 4, 0, 2 * Math.PI);
