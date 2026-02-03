@@ -72,7 +72,7 @@ export default function ArcCircleConstruction() {
 
     // Step 0: Mark points A and B
     if (currentStep >= 0 || !showSteps) {
-      ctx.fillStyle = "#3b82f6";
+      ctx.fillStyle = "#f43f5e";
       ctx.beginPath();
       ctx.arc(pointA_x, pointA_y, 5, 0, 2 * Math.PI);
       ctx.fill();
