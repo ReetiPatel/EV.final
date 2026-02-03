@@ -9,7 +9,7 @@ export default function HomePage() {
       <div className="text-center space-y-8 px-4">
         <div className="space-y-4">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-800" style={{ fontFamily: "'Spectral', serif" }}>
-            Engineering Drawing
+            Engineering Visualization
           </h1>
           <p className="text-lg sm:text-xl text-gray-600" style={{ fontFamily: "'Inter', sans-serif" }}>
             Ellipse Construction Methods
@@ -27,8 +27,11 @@ export default function HomePage() {
           </Button>
         </div>
 
-        <div className="pt-12 text-sm text-gray-500">
-          <p>College Project - Geometry & Engineering Graphics</p>
+        <div className="pt-12 space-y-2">
+          <p className="text-sm text-gray-500">College Project - Geometry & Engineering Graphics</p>
+          <p className="text-base font-medium text-gray-700">
+            Made By: Reeti Patel, Sujal Sevaramani, Tirth Shah
+          </p>
         </div>
       </div>
     </div>
