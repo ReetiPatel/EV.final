@@ -14,16 +14,16 @@ export default function ArcCircleConstruction() {
   const steps = [
     "Construct horizontal line AB of 100mm",
     "Mark point C above AB such that AC=75mm and BC=60mm, connect to form triangle ABC",
-    "Draw perpendicular from midpoint O of AB: 60mm upwards and 60mm downwards",
+    "Mark midpoint O of AB (perpendicular for calculation only - not drawn)",
     "From O, extend AO and BO by 17.5mm to mark endpoints A' and B'",
-    "From A to O, mark 4 points at 10mm intervals, number them 1, 2, 3, 4",
-    "Compass: radius A'-1 centered at A (arcs up/down), radius B'-1 at B (intersecting arcs)",
-    "Compass: radius A'-2 centered at A (arcs up/down), radius B'-2 at B (intersecting arcs)",
-    "Compass: radius A'-3 centered at A (arcs up/down), radius B'-3 at B (intersecting arcs)",
-    "Compass: radius A'-4 centered at A (arcs up/down), radius B'-4 at B (intersecting arcs)",
-    "Radius A'-O from A (arcs on vertical), radius B'-O from B (forming minor axis)",
-    "Radius A'-A from both A and B, radius B'-A from both A and B (corner arcs)",
-    "Connect all intersection points with smooth curve to form complete ellipse"
+    "Mark 4 points from A to O at 10mm intervals (1,2,3,4) and repeat from B to O",
+    "Compass: radius A'-1 from A/B (arcs), radius B'-1 from A/B (intersecting arcs)",
+    "Compass: radius A'-2 from A/B (arcs), radius B'-2 from A/B (intersecting arcs)",
+    "Compass: radius A'-3 from A/B (arcs), radius B'-3 from A/B (intersecting arcs)",
+    "Compass: radius A'-4 from A/B (arcs), radius B'-4 from A/B (intersecting arcs)",
+    "Radius A'-O from A and B (minor axis points on vertical line)",
+    "Radius A'-A from A/B, radius B'-A from A/B (corner arcs)",
+    "Connect all intersection points including minor axis to form smooth ellipse"
   ];
 
   useEffect(() => {
