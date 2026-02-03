@@ -350,8 +350,8 @@ export default function FocusDirectrixConstruction() {
                 <div className="bg-white rounded-lg p-4 shadow-inner">
                   <canvas
                     ref={canvasRef}
-                    width={800}
-                    height={500}
+                    width={1000}
+                    height={600}
                     className="w-full border border-gray-200 rounded"
                     data-testid="construction-canvas"
                   />
