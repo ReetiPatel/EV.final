@@ -117,7 +117,7 @@ export default function ArcCircleConstruction() {
       ctx.setLineDash([]);
     }
     
-    // Step 2: Draw perpendicular from O
+    // Step 2: Draw perpendicular from O (invisible - just for construction)
     if (currentStep >= 2 || !showSteps) {
       ctx.fillStyle = "#ec4899";
       ctx.beginPath();
@@ -125,12 +125,7 @@ export default function ArcCircleConstruction() {
       ctx.fill();
       ctx.fillText("O", pointO_x - 20, pointO_y + 5);
       
-      ctx.strokeStyle = "#94a3b8";
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(pointO_x, pointO_y - perpendicular_length);
-      ctx.lineTo(pointO_x, pointO_y + perpendicular_length);
-      ctx.stroke();
+      // Don't draw the vertical line - only use for calculations
     }
     
     // Step 3: Mark A' and B'
