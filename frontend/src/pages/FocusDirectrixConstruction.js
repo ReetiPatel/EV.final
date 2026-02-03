@@ -274,34 +274,47 @@ export default function FocusDirectrixConstruction() {
 
     // Step 11: Draw final ellipse
     if (currentStep >= 10 || !showSteps) {
-      // Sort points for proper curve drawing
-      ellipsePoints.sort((a, b) => {
-        if (a.y < pointR_y && b.y < pointR_y) return a.x - b.x;
-        if (a.y >= pointR_y && b.y >= pointR_y) return b.x - a.x;
-        return a.y - b.y;
+      // Separate points into upper and lower halves for better smoothing
+      const upperPoints = [];
+      const lowerPoints = [];
+      
+      ellipsePoints.forEach(point => {
+        if (point.y <= pointR_y) {
+          upperPoints.push(point);
+        } else {
+          lowerPoints.push(point);
+        }
       });
-
+      
+      // Sort points
+      upperPoints.sort((a, b) => a.x - b.x);
+      lowerPoints.sort((a, b) => b.x - a.x);
+      
+      // Add point V at both ends for closure
+      const allPoints = [...upperPoints, ...lowerPoints];
+      
       ctx.strokeStyle = "#ec4899";
       ctx.lineWidth = 3;
       ctx.beginPath();
       
-      // Use smooth cardinal spline interpolation for perfect ellipse
-      if (ellipsePoints.length > 0) {
-        ctx.moveTo(ellipsePoints[0].x, ellipsePoints[0].y);
+      if (allPoints.length > 2) {
+        // Start at first point
+        ctx.moveTo(allPoints[0].x, allPoints[0].y);
         
-        // Draw smooth curve through all points using quadratic curves
-        for (let i = 0; i < ellipsePoints.length; i++) {
-          const current = ellipsePoints[i];
-          const next = ellipsePoints[(i + 1) % ellipsePoints.length];
-          const nextNext = ellipsePoints[(i + 2) % ellipsePoints.length];
+        // Draw smooth curve using Catmull-Rom to Bezier conversion
+        for (let i = 0; i < allPoints.length; i++) {
+          const p0 = allPoints[(i - 1 + allPoints.length) % allPoints.length];
+          const p1 = allPoints[i];
+          const p2 = allPoints[(i + 1) % allPoints.length];
+          const p3 = allPoints[(i + 2) % allPoints.length];
           
-          // Calculate control point for smooth curve
-          const controlX = next.x;
-          const controlY = next.y;
-          const endX = (next.x + nextNext.x) / 2;
-          const endY = (next.y + nextNext.y) / 2;
+          // Catmull-Rom to Bezier control points
+          const cp1x = p1.x + (p2.x - p0.x) / 6;
+          const cp1y = p1.y + (p2.y - p0.y) / 6;
+          const cp2x = p2.x - (p3.x - p1.x) / 6;
+          const cp2y = p2.y - (p3.y - p1.y) / 6;
           
-          ctx.quadraticCurveTo(controlX, controlY, endX, endY);
+          ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
         }
       }
       
