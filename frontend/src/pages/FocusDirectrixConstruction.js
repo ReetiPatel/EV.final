@@ -340,7 +340,7 @@ export default function FocusDirectrixConstruction() {
                   <div>
                     <strong>Points to plot:</strong> At least 15 points, 10 mm apart
                   </div>
-                  <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                  <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                     <p className="text-sm">
                       <strong>Note:</strong> Since eccentricity e = 2/3 {'<'} 1, the curve formed is an
                       <strong> ELLIPSE</strong>. The ratio PF/PM = e is constant for all points on the curve,
