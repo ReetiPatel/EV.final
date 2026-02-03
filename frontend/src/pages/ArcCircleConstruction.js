@@ -303,30 +303,78 @@ export default function ArcCircleConstruction() {
     
     // Step 12: Draw smooth ellipse
     if (currentStep >= 11 || !showSteps) {
-      // Separate and sort points
-      const upperPoints = ellipsePoints.filter(p => p.y < pointO_y).sort((a, b) => a.x - b.x);
-      const lowerPoints = ellipsePoints.filter(p => p.y >= pointO_y).sort((a, b) => b.x - a.x);
-      const allPoints = [...upperPoints, ...lowerPoints];
-      
-      if (allPoints.length > 3) {
+      if (ellipsePoints.length > 3) {
+        // Separate points for better organization
+        const leftPoints = ellipsePoints.filter(p => p.x < pointO_x);
+        const rightPoints = ellipsePoints.filter(p => p.x > pointO_x);
+        const centerPoints = ellipsePoints.filter(p => Math.abs(p.x - pointO_x) < 5);
+        
+        // Sort left points: from A' going up, then down
+        leftPoints.sort((a, b) => {
+          if (a.x === b.x) return a.y - b.y;
+          return a.x - b.x;
+        });
+        
+        // Sort right points: from center going up, then down to B'
+        rightPoints.sort((a, b) => {
+          if (a.x === b.x) return a.y - b.y;
+          return a.x - b.x;
+        });
+        
+        // Sort center points (minor axis)
+        centerPoints.sort((a, b) => a.y - b.y);
+        
+        // Build the complete ellipse path
+        const upperLeft = leftPoints.filter(p => p.y < pointO_y).sort((a, b) => a.x - b.x);
+        const lowerLeft = leftPoints.filter(p => p.y >= pointO_y).sort((a, b) => a.x - b.x);
+        const upperRight = rightPoints.filter(p => p.y < pointO_y).sort((a, b) => a.x - b.x);
+        const lowerRight = rightPoints.filter(p => p.y >= pointO_y).sort((a, b) => a.x - b.x);
+        const topCenter = centerPoints.filter(p => p.y < pointO_y);
+        const bottomCenter = centerPoints.filter(p => p.y >= pointO_y);
+        
+        // Create ordered point sequence: A' -> upper left -> top center -> upper right -> B' -> lower right -> bottom center -> lower left -> back to A'
+        const orderedPoints = [
+          ...upperLeft,
+          ...topCenter,
+          ...upperRight,
+          ...lowerRight.reverse(),
+          ...bottomCenter.reverse(),
+          ...lowerLeft.reverse()
+        ];
+        
+        // Remove duplicates
+        const uniquePoints = [];
+        orderedPoints.forEach(point => {
+          const isDuplicate = uniquePoints.some(p => 
+            Math.abs(p.x - point.x) < 1 && Math.abs(p.y - point.y) < 1
+          );
+          if (!isDuplicate) {
+            uniquePoints.push(point);
+          }
+        });
+        
         ctx.strokeStyle = "#ec4899";
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.moveTo(allPoints[0].x, allPoints[0].y);
         
-        // Draw smooth curve using Catmull-Rom
-        for (let i = 0; i < allPoints.length; i++) {
-          const p0 = allPoints[(i - 1 + allPoints.length) % allPoints.length];
-          const p1 = allPoints[i];
-          const p2 = allPoints[(i + 1) % allPoints.length];
-          const p3 = allPoints[(i + 2) % allPoints.length];
+        if (uniquePoints.length > 0) {
+          ctx.moveTo(uniquePoints[0].x, uniquePoints[0].y);
           
-          const cp1x = p1.x + (p2.x - p0.x) / 6;
-          const cp1y = p1.y + (p2.y - p0.y) / 6;
-          const cp2x = p2.x - (p3.x - p1.x) / 6;
-          const cp2y = p2.y - (p3.y - p1.y) / 6;
-          
-          ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+          // Draw smooth curve using Catmull-Rom to Bezier
+          for (let i = 0; i < uniquePoints.length; i++) {
+            const p0 = uniquePoints[(i - 1 + uniquePoints.length) % uniquePoints.length];
+            const p1 = uniquePoints[i];
+            const p2 = uniquePoints[(i + 1) % uniquePoints.length];
+            const p3 = uniquePoints[(i + 2) % uniquePoints.length];
+            
+            // Catmull-Rom to Bezier control points
+            const cp1x = p1.x + (p2.x - p0.x) / 6;
+            const cp1y = p1.y + (p2.y - p0.y) / 6;
+            const cp2x = p2.x - (p3.x - p1.x) / 6;
+            const cp2y = p2.y - (p3.y - p1.y) / 6;
+            
+            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
+          }
         }
         
         ctx.closePath();
@@ -335,9 +383,9 @@ export default function ArcCircleConstruction() {
         // Label
         ctx.fillStyle = "#ec4899";
         ctx.font = "bold 16px Inter";
-        ctx.fillText("ELLIPSE", centerX - 50, centerY - 150);
+        ctx.fillText("PERFECT ELLIPSE", centerX - 60, centerY - 150);
         ctx.font = "12px Inter";
-        ctx.fillText("(Smooth curve)", centerX - 50, centerY - 130);
+        ctx.fillText("(A' to B' with minor axis)", centerX - 70, centerY - 130);
       }
     }
   };
