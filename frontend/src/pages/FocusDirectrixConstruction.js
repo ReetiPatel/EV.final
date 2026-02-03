@@ -468,7 +468,7 @@ export default function FocusDirectrixConstruction() {
                     <strong>Perpendicular from V:</strong> 26 mm (both directions)
                   </div>
                   <div>
-                    <strong>Number of parallel lines:</strong> 15 lines at 10 mm spacing
+                    <strong>Number of parallel lines:</strong> 16 lines at 10 mm spacing
                   </div>
                   <div>
                     <strong>Angled line length:</strong> 270 mm from R
