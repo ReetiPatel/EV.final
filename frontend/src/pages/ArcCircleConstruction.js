@@ -548,7 +548,10 @@ export default function ArcCircleConstruction() {
                     <strong>Point C location:</strong> AC = 75 mm, BC = 60 mm
                   </div>
                   <div>
-                    <strong>Perpendicular from O:</strong> 60 mm up and down
+                    <strong>Minor axis:</strong> 92 mm (46mm up, 46mm down from O)
+                  </div>
+                  <div>
+                    <strong>Ellipse endpoints:</strong> A' (left) to B' (right)
                   </div>
                   <div>
                     <strong>Extension A' and B':</strong> 17.5 mm from O
