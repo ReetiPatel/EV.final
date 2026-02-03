@@ -449,10 +449,8 @@ export default function ArcCircleConstruction() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 leading-relaxed">
-                  To construct an ellipse passing through a given point C using the{" "}
-                  <strong>Arc of Circle method</strong> (Concentric Circle method), where point C is
-                  located using its distances from two fixed points A and B. Also draw the tangent and
-                  normal at point C.
+                  To construct an ellipse using the <strong>Arc of Circle method</strong> with compass
+                  technique, where point C helps establish the ellipse geometry through triangle ABC.
                 </p>
               </CardContent>
             </Card>
@@ -466,27 +464,26 @@ export default function ArcCircleConstruction() {
               <CardContent>
                 <div className="space-y-3 text-gray-700">
                   <div>
-                    <strong>Points A and B:</strong> 100 mm apart
+                    <strong>Line AB:</strong> 100 mm (horizontal)
                   </div>
                   <div>
-                    <strong>Distance AC:</strong> 75 mm
+                    <strong>Point C location:</strong> AC = 75 mm, BC = 60 mm
                   </div>
                   <div>
-                    <strong>Distance BC:</strong> 60 mm
+                    <strong>Perpendicular from O:</strong> 60 mm up and down
                   </div>
                   <div>
-                    <strong>Construction:</strong> Ellipse must pass through point C
+                    <strong>Extension A' and B':</strong> 17.5 mm from O
                   </div>
                   <div>
-                    <strong>Additional:</strong> Draw tangent and normal at C
+                    <strong>Marked points:</strong> 4 points at 10 mm intervals (1, 2, 3, 4)
                   </div>
                   <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                     <p className="text-sm">
-                      <strong>Method:</strong> First locate point C using the given distances. Then
-                      construct the ellipse using concentric circles method where A and B lie on the
-                      major axis. The major and minor axes are calculated from the triangle geometry.
-                      Finally, draw the tangent (touching the curve at C) and normal (perpendicular to
-                      tangent at C).
+                      <strong>Method:</strong> This compass method uses arc intersections from points A and B
+                      with radii calculated from extended points A' and B'. The intersections of these arcs
+                      determine precise points on the ellipse, which are then connected smoothly to form the
+                      complete curve.
                     </p>
                   </div>
                 </div>
