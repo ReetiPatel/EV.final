@@ -48,7 +48,7 @@ export default function ArcCircleConstruction() {
     const AB_length = 100 * scale;
     const AC_distance = 75 * scale;
     const BC_distance = 60 * scale;
-    const perpendicular_length = 60 * scale;
+    const minor_axis_half = 46 * scale; // 46mm up and down from O
     const extension_length = 17.5 * scale;
     const point_spacing = 10 * scale;
     
