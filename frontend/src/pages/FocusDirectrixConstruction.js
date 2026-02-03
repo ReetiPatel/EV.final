@@ -258,6 +258,9 @@ export default function FocusDirectrixConstruction() {
         }
       }
 
+      // Add point V to close the ellipse
+      ellipsePoints.push({ x: pointV_x, y: pointV_y });
+
       // Mark ellipse points
       if (currentStep >= 8 || !showSteps) {
         ctx.fillStyle = "#dc2626";
@@ -288,12 +291,15 @@ export default function FocusDirectrixConstruction() {
           ctx.lineTo(point.x, point.y);
         }
       });
+      ctx.closePath();
       ctx.stroke();
 
       // Label
       ctx.fillStyle = "#ec4899";
       ctx.font = "bold 16px Inter";
       ctx.fillText("ELLIPSE", pointR_x + 350, centerY - 100);
+      ctx.font = "12px Inter";
+      ctx.fillText("(Complete curve through V)", pointR_x + 350, centerY - 80);
     }
   };
 
