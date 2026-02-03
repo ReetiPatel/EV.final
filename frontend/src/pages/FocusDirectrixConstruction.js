@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home, Play, Pause, RotateCcw } from "lucide-react";
+import { Home, Play, Pause, RotateCcw, ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function FocusDirectrixConstruction() {
   const navigate = useNavigate();
