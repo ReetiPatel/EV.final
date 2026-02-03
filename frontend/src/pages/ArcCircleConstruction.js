@@ -357,7 +357,7 @@ export default function ArcCircleConstruction() {
                       if (!showSteps) setCurrentStep(0);
                     }}
                     variant={showSteps ? "default" : "outline"}
-                    className={showSteps ? "bg-purple-600 hover:bg-purple-700" : ""}
+                    className={showSteps ? "bg-pink-500 hover:bg-pink-600" : ""}
                   >
                     {showSteps ? "Hide Steps" : "Show Step-by-Step"}
                   </Button>
