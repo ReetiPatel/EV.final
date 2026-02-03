@@ -125,14 +125,14 @@ export default function ArcCircleConstruction() {
     // Step 4-5: Draw concentric circles
     if (currentStep >= 4 || !showSteps) {
       // Outer circle (semi-major axis)
-      ctx.strokeStyle = "#3b82f6";
+      ctx.strokeStyle = "#f43f5e";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(centerX, centerY, majorRadius, 0, 2 * Math.PI);
       ctx.stroke();
 
       // Inner circle (semi-minor axis)
-      ctx.strokeStyle = "#8b5cf6";
+      ctx.strokeStyle = "#ec4899";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(centerX, centerY, minorRadius, 0, 2 * Math.PI);
