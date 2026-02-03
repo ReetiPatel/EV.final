@@ -39,144 +39,261 @@ export default function FocusDirectrixConstruction() {
 
     ctx.clearRect(0, 0, width, height);
 
-    // Setup parameters (65mm = ~245px at scale, distance between points ~10mm = ~38px)
-    const scale = 3.77; // pixels per mm
-    const centerX = width / 2;
+    // Setup parameters based on exact specifications
+    const scale = 2.5; // pixels per mm (adjusted for 800px canvas)
+    const centerX = 150;
     const centerY = height / 2;
-    const directrixX = centerX - 180;
-    const focusDistance = 65 * scale; // 65mm
-    const focusX = directrixX + focusDistance;
-    const focusY = centerY;
-    const eccentricity = 2 / 3;
-    const numPoints = 24; // At least 15 points
-    const pointSpacing = 10 * scale; // 10mm apart
+    
+    // Given measurements in mm
+    const AB_length = 200 * scale;
+    const R_to_V = 39 * scale;
+    const R_to_F = 65 * scale;
+    const V_perpendicular = 26 * scale;
+    const angled_line_length = 270 * scale;
+    const num_parallel_lines = 15;
+    const parallel_spacing = 10 * scale;
+
+    // Key points
+    const pointR_x = centerX;
+    const pointR_y = centerY;
+    const pointV_x = pointR_x + R_to_V;
+    const pointV_y = pointR_y;
+    const pointF_x = pointR_x + R_to_F;
+    const pointF_y = pointR_y;
+    const pointV_prime_x = pointV_x;
+    const pointV_prime_y = pointV_y - V_perpendicular;
+    const pointV_star_x = pointV_x;
+    const pointV_star_y = pointV_y + V_perpendicular;
+
+    // Calculate angle for lines from R through V' and V*
+    const angle_up = Math.atan2(pointV_prime_y - pointR_y, pointV_prime_x - pointR_x);
+    const angle_down = Math.atan2(pointV_star_y - pointR_y, pointV_star_x - pointR_x);
 
     // Step 0: Draw directrix AB
     if (currentStep >= 0 || !showSteps) {
       ctx.strokeStyle = "#f43f5e";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(directrixX, centerY - 220);
-      ctx.lineTo(directrixX, centerY + 220);
+      ctx.moveTo(pointR_x, pointR_y - AB_length/2);
+      ctx.lineTo(pointR_x, pointR_y + AB_length/2);
       ctx.stroke();
 
       ctx.fillStyle = "#f43f5e";
       ctx.font = "14px Inter";
-      ctx.fillText("A", directrixX - 5, centerY - 230);
-      ctx.fillText("B", directrixX - 5, centerY + 240);
-      ctx.fillText("Directrix AB", directrixX - 70, centerY - 240);
+      ctx.fillText("A", pointR_x - 20, pointR_y - AB_length/2 - 5);
+      ctx.fillText("B", pointR_x - 20, pointR_y + AB_length/2 + 15);
+      ctx.fillText("R", pointR_x - 20, pointR_y + 5);
+      
+      // Draw horizontal line from R
+      ctx.strokeStyle = "#94a3b8";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(pointR_x, pointR_y);
+      ctx.lineTo(pointR_x + 600, pointR_y);
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
 
-    // Step 1: Draw focus F at 65mm from AB
+    // Step 1: Mark points V and F
     if (currentStep >= 1 || !showSteps) {
+      ctx.fillStyle = "#10b981";
+      ctx.beginPath();
+      ctx.arc(pointV_x, pointV_y, 4, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("V", pointV_x, pointV_y - 10);
+
       ctx.fillStyle = "#dc2626";
       ctx.beginPath();
-      ctx.arc(focusX, focusY, 5, 0, 2 * Math.PI);
+      ctx.arc(pointF_x, pointF_y, 5, 0, 2 * Math.PI);
       ctx.fill();
-      ctx.fillText("F (65mm from AB)", focusX + 10, focusY - 10);
-      
-      // Draw dimension line
-      if (showSteps && currentStep >= 1) {
-        ctx.strokeStyle = "#94a3b8";
-        ctx.lineWidth = 1;
-        ctx.setLineDash([3, 3]);
+      ctx.fillText("F", pointF_x, pointF_y - 10);
+    }
+
+    // Step 2: Draw perpendicular from V
+    if (currentStep >= 2 || !showSteps) {
+      ctx.strokeStyle = "#10b981";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(pointV_prime_x, pointV_prime_y);
+      ctx.lineTo(pointV_star_x, pointV_star_y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#10b981";
+      ctx.beginPath();
+      ctx.arc(pointV_prime_x, pointV_prime_y, 4, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("V'", pointV_prime_x + 10, pointV_prime_y);
+
+      ctx.beginPath();
+      ctx.arc(pointV_star_x, pointV_star_y, 4, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillText("V*", pointV_star_x + 10, pointV_star_y);
+    }
+
+    // Step 3: Draw angled lines from R
+    const angle_line_end_up_x = pointR_x + angled_line_length * Math.cos(angle_up);
+    const angle_line_end_up_y = pointR_y + angled_line_length * Math.sin(angle_up);
+    const angle_line_end_down_x = pointR_x + angled_line_length * Math.cos(angle_down);
+    const angle_line_end_down_y = pointR_y + angled_line_length * Math.sin(angle_down);
+
+    if (currentStep >= 3 || !showSteps) {
+      ctx.strokeStyle = "#6366f1";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(pointR_x, pointR_y);
+      ctx.lineTo(angle_line_end_up_x, angle_line_end_up_y);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(pointR_x, pointR_y);
+      ctx.lineTo(angle_line_end_down_x, angle_line_end_down_y);
+      ctx.stroke();
+    }
+
+    // Calculate intersection points and ellipse points
+    const ellipsePoints = [];
+    const intersectionPointsUp = [];
+    const intersectionPointsDown = [];
+    const vPoints = [];
+
+    for (let i = 1; i <= num_parallel_lines; i++) {
+      const offset = pointV_x + i * parallel_spacing;
+      vPoints.push({ x: offset, y: pointR_y });
+
+      // Find intersection with upward angled line
+      const t_up = (offset - pointR_x) / (angled_line_length * Math.cos(angle_up));
+      const intersect_up_y = pointR_y + t_up * angled_line_length * Math.sin(angle_up);
+      intersectionPointsUp.push({ x: offset, y: intersect_up_y, num: i });
+
+      // Find intersection with downward angled line
+      const t_down = (offset - pointR_x) / (angled_line_length * Math.cos(angle_down));
+      const intersect_down_y = pointR_y + t_down * angled_line_length * Math.sin(angle_down);
+      intersectionPointsDown.push({ x: offset, y: intersect_down_y, num: i });
+    }
+
+    // Step 4: Draw parallel lines
+    if (currentStep >= 4 || !showSteps) {
+      ctx.strokeStyle = "#cbd5e1";
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 2]);
+
+      for (let i = 0; i < num_parallel_lines; i++) {
+        const x = vPoints[i].x;
         ctx.beginPath();
-        ctx.moveTo(directrixX, focusY);
-        ctx.lineTo(focusX, focusY);
+        ctx.moveTo(x, intersectionPointsUp[i].y - 20);
+        ctx.lineTo(x, intersectionPointsDown[i].y + 20);
         ctx.stroke();
-        ctx.setLineDash([]);
+      }
+      ctx.setLineDash([]);
+    }
+
+    // Step 5-6: Mark and number intersection points
+    if (currentStep >= 5 || !showSteps) {
+      ctx.fillStyle = "#6366f1";
+      ctx.font = "11px Inter";
+      
+      intersectionPointsUp.forEach((point, i) => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fill();
+        if (i % 2 === 0) ctx.fillText(point.num.toString(), point.x + 8, point.y - 5);
+      });
+
+      intersectionPointsDown.forEach((point, i) => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fill();
+        if (i % 2 === 0) ctx.fillText(point.num + "'", point.x + 8, point.y + 12);
+      });
+    }
+
+    // Step 7: Mark V points
+    if (currentStep >= 6 || !showSteps) {
+      ctx.fillStyle = "#10b981";
+      ctx.font = "11px Inter";
+      vPoints.forEach((point, i) => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fill();
+        if (i % 2 === 0) ctx.fillText("V" + (i+1), point.x - 5, point.y + 15);
+      });
+    }
+
+    // Step 8-10: Draw arcs using compass method
+    if (currentStep >= 7 || !showSteps) {
+      ctx.strokeStyle = "#ec4899";
+      ctx.lineWidth = 0.5;
+      
+      for (let i = 0; i < num_parallel_lines; i++) {
+        // Calculate radius from Vi to i
+        const radius = Math.sqrt(
+          Math.pow(intersectionPointsUp[i].x - vPoints[i].x, 2) +
+          Math.pow(intersectionPointsUp[i].y - vPoints[i].y, 2)
+        );
+
+        // Draw arc centered at F
+        // Find intersection points on the lines
+        const angle_to_up = Math.atan2(intersectionPointsUp[i].y - pointF_y, intersectionPointsUp[i].x - pointF_x);
+        const angle_to_down = Math.atan2(intersectionPointsDown[i].y - pointF_y, intersectionPointsDown[i].x - pointF_x);
+
+        // Calculate ellipse points
+        const dist_F_to_line = vPoints[i].x - pointF_x;
+        const ellipse_y_up = Math.sqrt(Math.max(0, radius * radius - dist_F_to_line * dist_F_to_line));
+        const ellipse_y_down = -ellipse_y_up;
+
+        if (!isNaN(ellipse_y_up)) {
+          ellipsePoints.push({ x: vPoints[i].x, y: pointF_y - ellipse_y_up });
+          ellipsePoints.push({ x: vPoints[i].x, y: pointF_y - ellipse_y_down });
+
+          // Draw small arcs showing compass marks
+          if (showSteps && currentStep >= 7 && i < 5) {
+            ctx.beginPath();
+            ctx.arc(pointF_x, pointF_y, radius, angle_to_up - 0.1, angle_to_up + 0.1);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(pointF_x, pointF_y, radius, angle_to_down - 0.1, angle_to_down + 0.1);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Mark ellipse points
+      if (currentStep >= 8 || !showSteps) {
+        ctx.fillStyle = "#dc2626";
+        ellipsePoints.forEach((point) => {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+        });
       }
     }
 
-    // Step 2-5: Calculate and draw points
-    if (currentStep >= 2 || !showSteps) {
-      const points = [];
+    // Step 11: Draw final ellipse
+    if (currentStep >= 10 || !showSteps) {
+      // Sort points for proper curve drawing
+      ellipsePoints.sort((a, b) => {
+        if (a.y < pointR_y && b.y < pointR_y) return a.x - b.x;
+        if (a.y >= pointR_y && b.y >= pointR_y) return b.x - a.x;
+        return a.y - b.y;
+      });
 
-      // Calculate points where PF/PM = 2/3
-      for (let i = 0; i < numPoints; i++) {
-        const angle = (i * 2 * Math.PI) / numPoints;
-        const dirX = Math.cos(angle);
-        const dirY = Math.sin(angle);
-
-        // Find point P such that PF/PM = eccentricity
-        for (let r = 10; r < 350; r += 1) {
-          const px = focusX + dirX * r;
-          const py = focusY + dirY * r;
-
-          const pf = Math.sqrt((px - focusX) ** 2 + (py - focusY) ** 2);
-          const pm = Math.abs(px - directrixX);
-
-          if (pm > 0 && Math.abs(pf / pm - eccentricity) < 0.01) {
-            points.push({ x: px, y: py });
-            break;
-          }
-        }
-      }
-
-      // Step 3: Draw construction lines from F
-      if (showSteps && currentStep >= 2) {
-        ctx.strokeStyle = "#e2e8f0";
-        ctx.lineWidth = 0.5;
-        const linesToShow = Math.min(12, points.length);
-        for (let i = 0; i < linesToShow; i++) {
-          const point = points[Math.floor((i * points.length) / linesToShow)];
-          ctx.beginPath();
-          ctx.moveTo(focusX, focusY);
-          ctx.lineTo(point.x, point.y);
-          ctx.stroke();
-        }
-      }
-
-      // Step 4: Draw perpendiculars to show PM
-      if (showSteps && currentStep >= 3) {
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.lineWidth = 0.5;
-        const linesToShow = Math.min(8, points.length);
-        for (let i = 0; i < linesToShow; i++) {
-          const point = points[Math.floor((i * points.length) / linesToShow)];
-          ctx.beginPath();
+      ctx.strokeStyle = "#ec4899";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ellipsePoints.forEach((point, i) => {
+        if (i === 0) {
           ctx.moveTo(point.x, point.y);
-          ctx.lineTo(directrixX, point.y);
-          ctx.stroke();
+        } else {
+          ctx.lineTo(point.x, point.y);
         }
-      }
+      });
+      ctx.stroke();
 
-      // Step 5: Mark points P
-      if (currentStep >= 4 || !showSteps) {
-        ctx.fillStyle = "#dc2626";
-        points.forEach((point, i) => {
-          if (i % 2 === 0) { // Show every other point for clarity
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
-            ctx.fill();
-          }
-        });
-      }
-
-      // Step 6: Draw the ellipse curve
-      if (currentStep >= 5 || !showSteps) {
-        ctx.strokeStyle = "#ec4899";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        points.forEach((point, i) => {
-          if (i === 0) {
-            ctx.moveTo(point.x, point.y);
-          } else {
-            ctx.lineTo(point.x, point.y);
-          }
-        });
-        ctx.closePath();
-        ctx.stroke();
-      }
-
-      // Step 7: Label the curve
-      if (currentStep >= 6 || !showSteps) {
-        ctx.fillStyle = "#ec4899";
-        ctx.font = "bold 16px Inter";
-        ctx.fillText("ELLIPSE", centerX + 80, centerY - 150);
-        ctx.font = "14px Inter";
-        ctx.fillText("(e = 2/3 < 1)", centerX + 80, centerY - 130);
-      }
+      // Label
+      ctx.fillStyle = "#ec4899";
+      ctx.font = "bold 16px Inter";
+      ctx.fillText("ELLIPSE", pointR_x + 350, centerY - 100);
     }
   };
 
