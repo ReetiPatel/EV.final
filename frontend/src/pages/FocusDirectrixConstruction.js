@@ -434,9 +434,9 @@ export default function FocusDirectrixConstruction() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 leading-relaxed">
-                  To construct an ellipse using the <strong>Focus and Directrix method</strong> by
-                  tracing the path of a point P that maintains a constant ratio (2:3) between its
-                  distance from focus F and its perpendicular distance from directrix AB.
+                  To construct an ellipse using the <strong>Focus and Directrix method</strong> with
+                  compass and straightedge, following the geometric construction steps with specific
+                  measurements and parallel line intersections.
                 </p>
               </CardContent>
             </Card>
@@ -450,23 +450,29 @@ export default function FocusDirectrixConstruction() {
               <CardContent>
                 <div className="space-y-3 text-gray-700">
                   <div>
-                    <strong>Distance of F from AB:</strong> 65 mm
+                    <strong>Directrix AB length:</strong> 200 mm
                   </div>
                   <div>
-                    <strong>Ratio (PF : PM):</strong> 2 : 3
+                    <strong>Distance R to V:</strong> 39 mm
                   </div>
                   <div>
-                    <strong>Eccentricity (e):</strong> 2/3 = 0.667
+                    <strong>Distance R to F:</strong> 65 mm (Focus)
                   </div>
                   <div>
-                    <strong>Points to plot:</strong> At least 15 points, 10 mm apart
+                    <strong>Perpendicular from V:</strong> 26 mm (both directions)
+                  </div>
+                  <div>
+                    <strong>Number of parallel lines:</strong> 15 lines at 10 mm spacing
+                  </div>
+                  <div>
+                    <strong>Angled line length:</strong> 270 mm from R
                   </div>
                   <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                     <p className="text-sm">
-                      <strong>Note:</strong> Since eccentricity e = 2/3 {'<'} 1, the curve formed is an
-                      <strong> ELLIPSE</strong>. The ratio PF/PM = e is constant for all points on the curve,
-                      where P is any point on the ellipse, F is the focus, and M is the foot of
-                      perpendicular from P to the directrix AB.
+                      <strong>Method:</strong> This construction uses the focus-directrix property where
+                      each point on the ellipse maintains a constant ratio of distances (eccentricity).
+                      The compass method with parallel lines provides accurate point locations that are
+                      then connected to form the smooth ellipse curve.
                     </p>
                   </div>
                 </div>
