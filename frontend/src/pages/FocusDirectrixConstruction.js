@@ -49,14 +49,14 @@ export default function FocusDirectrixConstruction() {
 
     // Step 0: Draw directrix AB
     if (currentStep >= 0 || !showSteps) {
-      ctx.strokeStyle = "#4f46e5";
+      ctx.strokeStyle = "#f43f5e";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(directrixX, centerY - 220);
       ctx.lineTo(directrixX, centerY + 220);
       ctx.stroke();
 
-      ctx.fillStyle = "#4f46e5";
+      ctx.fillStyle = "#f43f5e";
       ctx.font = "14px Inter";
       ctx.fillText("A", directrixX - 5, centerY - 230);
       ctx.fillText("B", directrixX - 5, centerY + 240);
