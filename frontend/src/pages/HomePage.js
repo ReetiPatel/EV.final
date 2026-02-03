@@ -29,7 +29,7 @@ export default function HomePage() {
 
         <div className="pt-12 space-y-2">
           <p className="text-sm text-gray-500">College Project - Geometry & Engineering Graphics</p>
-          <p className="text-base font-medium text-gray-700">
+          <p className="text-sm text-gray-500">
             Made By: Reeti Patel, Sujal Sevaramani, Tirth Shah
           </p>
         </div>
