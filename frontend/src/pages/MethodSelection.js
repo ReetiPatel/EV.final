@@ -7,7 +7,7 @@ export default function MethodSelection() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 py-12 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4" style={{ fontFamily: "'Spectral', serif" }}>
@@ -21,12 +21,12 @@ export default function MethodSelection() {
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <Card 
             data-testid="focus-directrix-card"
-            className="hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-indigo-400 bg-white/80 backdrop-blur-sm"
+            className="hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-rose-400 bg-white/80 backdrop-blur-sm"
             onClick={() => navigate("/construction/focus-directrix")}
           >
             <CardHeader>
-              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                <Focus className="w-8 h-8 text-indigo-600" />
+              <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mb-4">
+                <Focus className="w-8 h-8 text-rose-600" />
               </div>
               <CardTitle className="text-2xl" style={{ fontFamily: "'Spectral', serif" }}>
                 Focus and Directrix Method
@@ -38,7 +38,7 @@ export default function MethodSelection() {
             <CardContent>
               <Button 
                 data-testid="focus-directrix-btn"
-                className="w-full bg-indigo-600 hover:bg-indigo-700"
+                className="w-full bg-rose-500 hover:bg-rose-600"
                 onClick={() => navigate("/construction/focus-directrix")}
               >
                 View Construction
@@ -48,12 +48,12 @@ export default function MethodSelection() {
 
           <Card 
             data-testid="arc-circle-card"
-            className="hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-purple-400 bg-white/80 backdrop-blur-sm"
+            className="hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 hover:border-pink-400 bg-white/80 backdrop-blur-sm"
             onClick={() => navigate("/construction/arc-circle")}
           >
             <CardHeader>
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-                <CircleDot className="w-8 h-8 text-purple-600" />
+              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mb-4">
+                <CircleDot className="w-8 h-8 text-pink-600" />
               </div>
               <CardTitle className="text-2xl" style={{ fontFamily: "'Spectral', serif" }}>
                 Arc of Circle Method
@@ -65,7 +65,7 @@ export default function MethodSelection() {
             <CardContent>
               <Button 
                 data-testid="arc-circle-btn"
-                className="w-full bg-purple-600 hover:bg-purple-700"
+                className="w-full bg-pink-500 hover:bg-pink-600"
                 onClick={() => navigate("/construction/arc-circle")}
               >
                 View Construction
