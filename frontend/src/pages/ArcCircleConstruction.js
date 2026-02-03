@@ -457,7 +457,7 @@ export default function ArcCircleConstruction() {
                   <div>
                     <strong>Additional:</strong> Draw tangent and normal at C
                   </div>
-                  <div className="mt-4 p-3 bg-purple-50 rounded-lg">
+                  <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                     <p className="text-sm">
                       <strong>Method:</strong> First locate point C using the given distances. Then
                       construct the ellipse using concentric circles method where A and B lie on the
