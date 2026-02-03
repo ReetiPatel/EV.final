@@ -12,17 +12,18 @@ export default function ArcCircleConstruction() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const steps = [
-    "Mark points A and B, 100 mm apart",
-    "Using compass, draw arc from A with radius 75 mm",
-    "Draw arc from B with radius 60 mm",
-    "Mark intersection point C where both arcs meet",
-    "Calculate major and minor axes from triangle geometry",
-    "Draw two concentric circles with calculated radii",
-    "Divide circles into equal parts and mark division points",
-    "Draw vertical lines from outer circle and horizontal from inner circle",
-    "Mark intersection points - these form the ellipse",
-    "Join all points with smooth curve passing through C",
-    "Draw tangent and normal at point C"
+    "Construct horizontal line AB of 100mm",
+    "Mark point C above AB such that AC=75mm and BC=60mm, connect to form triangle ABC",
+    "Draw perpendicular from midpoint O of AB: 60mm upwards and 60mm downwards",
+    "From O, extend AO and BO by 17.5mm to mark endpoints A' and B'",
+    "From A to O, mark 4 points at 10mm intervals, number them 1, 2, 3, 4",
+    "Compass: radius A'-1 centered at A (arcs up/down), radius B'-1 at B (intersecting arcs)",
+    "Compass: radius A'-2 centered at A (arcs up/down), radius B'-2 at B (intersecting arcs)",
+    "Compass: radius A'-3 centered at A (arcs up/down), radius B'-3 at B (intersecting arcs)",
+    "Compass: radius A'-4 centered at A (arcs up/down), radius B'-4 at B (intersecting arcs)",
+    "Radius A'-O from A (arcs on vertical), radius B'-O from B (forming minor axis)",
+    "Radius A'-A from both A and B, radius B'-A from both A and B (corner arcs)",
+    "Connect all intersection points with smooth curve to form complete ellipse"
   ];
 
   useEffect(() => {
