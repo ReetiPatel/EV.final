@@ -183,14 +183,14 @@ export default function ArcCircleConstruction() {
 
     // Step 6: Mark division points
     if (currentStep >= 6 || !showSteps) {
-      ctx.fillStyle = "#3b82f6";
+      ctx.fillStyle = "#f43f5e";
       outerPoints.forEach((point, i) => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
         ctx.fill();
       });
 
-      ctx.fillStyle = "#8b5cf6";
+      ctx.fillStyle = "#ec4899";
       innerPoints.forEach((point) => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
