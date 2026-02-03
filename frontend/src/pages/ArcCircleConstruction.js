@@ -256,13 +256,13 @@ export default function ArcCircleConstruction() {
       });
     }
     
-    // Step 10: Minor axis arcs
+    // Step 10: Minor axis arcs (46mm up and down from O)
     if (currentStep >= 9 || !showSteps) {
       const radiusMinor = Math.sqrt(Math.pow(pointA_prime_x - pointO_x, 2) + Math.pow(pointA_prime_y - pointO_y, 2));
       
-      // Intersection with vertical line
-      const top_y = pointO_y - perpendicular_length;
-      const bottom_y = pointO_y + perpendicular_length;
+      // Minor axis points at 46mm from O
+      const top_y = pointO_y - minor_axis_half;
+      const bottom_y = pointO_y + minor_axis_half;
       
       ellipsePoints.push({ x: pointO_x, y: top_y });
       ellipsePoints.push({ x: pointO_x, y: bottom_y });
@@ -282,19 +282,13 @@ export default function ArcCircleConstruction() {
       }
     }
     
-    // Step 11: Corner arcs (A' to A, B' to A distances)
+    // Step 11: Add B' as the right endpoint of the ellipse
     if (currentStep >= 10 || !showSteps) {
-      const radiusAA = Math.sqrt(Math.pow(pointA_prime_x - pointA_x, 2) + Math.pow(pointA_prime_y - pointA_y, 2));
-      const radiusBA = Math.sqrt(Math.pow(pointB_prime_x - pointA_x, 2) + Math.pow(pointB_prime_y - pointA_y, 2));
+      // B' is the rightmost point of the ellipse
+      ellipsePoints.push({ x: pointB_prime_x, y: pointB_prime_y });
       
-      // Calculate intersections
-      const dx = pointB_x - pointA_x;
-      const d = Math.abs(dx);
-      const a = (radiusAA * radiusAA - radiusBA * radiusBA + d * d) / (2 * d);
-      const h = Math.sqrt(Math.max(0, radiusAA * radiusAA - a * a));
-      
-      ellipsePoints.push({ x: pointA_x + a, y: pointA_y - h });
-      ellipsePoints.push({ x: pointA_x + a, y: pointA_y + h });
+      // Also add A' as the leftmost point
+      ellipsePoints.push({ x: pointA_prime_x, y: pointA_prime_y });
     }
     
     // Mark all ellipse points
