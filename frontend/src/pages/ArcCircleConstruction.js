@@ -233,7 +233,7 @@ export default function ArcCircleConstruction() {
 
     // Step 9: Draw final ellipse
     if (currentStep >= 9 || !showSteps) {
-      ctx.strokeStyle = "#7c3aed";
+      ctx.strokeStyle = "#ec4899";
       ctx.lineWidth = 3;
       ctx.beginPath();
       ellipsePoints.forEach((point, i) => {
