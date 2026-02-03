@@ -284,13 +284,27 @@ export default function FocusDirectrixConstruction() {
       ctx.strokeStyle = "#ec4899";
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ellipsePoints.forEach((point, i) => {
-        if (i === 0) {
-          ctx.moveTo(point.x, point.y);
-        } else {
-          ctx.lineTo(point.x, point.y);
+      
+      // Use smooth cardinal spline interpolation for perfect ellipse
+      if (ellipsePoints.length > 0) {
+        ctx.moveTo(ellipsePoints[0].x, ellipsePoints[0].y);
+        
+        // Draw smooth curve through all points using quadratic curves
+        for (let i = 0; i < ellipsePoints.length; i++) {
+          const current = ellipsePoints[i];
+          const next = ellipsePoints[(i + 1) % ellipsePoints.length];
+          const nextNext = ellipsePoints[(i + 2) % ellipsePoints.length];
+          
+          // Calculate control point for smooth curve
+          const controlX = next.x;
+          const controlY = next.y;
+          const endX = (next.x + nextNext.x) / 2;
+          const endY = (next.y + nextNext.y) / 2;
+          
+          ctx.quadraticCurveTo(controlX, controlY, endX, endY);
         }
-      });
+      }
+      
       ctx.closePath();
       ctx.stroke();
 
