@@ -21,7 +21,7 @@ export default function HomePage() {
             data-testid="practical-2-btn"
             onClick={() => navigate("/methods")}
             size="lg"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-12 py-6 text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="bg-rose-500 hover:bg-rose-600 text-white px-12 py-6 text-xl rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
           >
             Practical 2
           </Button>
