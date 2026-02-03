@@ -174,11 +174,12 @@ export default function ArcCircleConstruction() {
       }
     }
     
-    // Steps 5-9: Draw arcs for points 1,2,3,4
+    // Steps 5-9: Draw arcs for points 1,2,3,4 from both A and B sides
     const ellipsePoints = [];
     
     if (currentStep >= 5 || !showSteps) {
-      markedPoints.forEach((point, idx) => {
+      // Process left side points (A to O)
+      markedPointsLeft.forEach((point, idx) => {
         const showArcs = showSteps && currentStep >= 5 && currentStep <= 8 && currentStep - 5 === idx;
         
         // Calculate radii
@@ -209,6 +210,31 @@ export default function ArcCircleConstruction() {
           
           ctx.setLineDash([]);
         }
+        
+        // Calculate intersection points
+        const dx = pointB_x - pointA_x;
+        const dy = pointB_y - pointA_y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        const a = (radiusA * radiusA - radiusB * radiusB + d * d) / (2 * d);
+        const h = Math.sqrt(Math.max(0, radiusA * radiusA - a * a));
+        
+        const cx = pointA_x + (dx * a) / d;
+        const cy = pointA_y + (dy * a) / d;
+        
+        const intersect1_x = cx + (h * dy) / d;
+        const intersect1_y = cy - (h * dx) / d;
+        const intersect2_x = cx - (h * dy) / d;
+        const intersect2_y = cy + (h * dx) / d;
+        
+        ellipsePoints.push({ x: intersect1_x, y: intersect1_y });
+        ellipsePoints.push({ x: intersect2_x, y: intersect2_y });
+      });
+      
+      // Process right side points (B to O) - repeat steps for B side
+      markedPointsRight.forEach((point, idx) => {
+        // Calculate radii
+        const radiusA = Math.sqrt(Math.pow(pointA_prime_x - point.x, 2) + Math.pow(pointA_prime_y - point.y, 2));
+        const radiusB = Math.sqrt(Math.pow(pointB_prime_x - point.x, 2) + Math.pow(pointB_prime_y - point.y, 2));
         
         // Calculate intersection points
         const dx = pointB_x - pointA_x;
