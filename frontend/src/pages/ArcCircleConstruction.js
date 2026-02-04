@@ -180,19 +180,54 @@ export default function ArcCircleConstruction() {
     if (currentStep >= 5 || !showSteps) {
       // Process left side points (A to O)
       markedPointsLeft.forEach((point, idx) => {
-        const showArcs = showSteps && currentStep >= 5 && currentStep <= 8 && currentStep - 5 === idx;
-        
         // Calculate radii
         const radiusA = Math.sqrt(Math.pow(pointA_prime_x - point.x, 2) + Math.pow(pointA_prime_y - point.y, 2));
         const radiusB = Math.sqrt(Math.pow(pointB_prime_x - point.x, 2) + Math.pow(pointB_prime_y - point.y, 2));
         
-        // Draw construction arcs if showing steps
-        if (showArcs || (!showSteps && idx === 0)) {
+        // Determine which arcs to show based on current step
+        // Step 6 (idx 5): Show only A'-1 (idx 0) - radiusA
+        // Step 7 (idx 6): Show A'-1 (idx 0) radiusA and B'-1 (idx 0) radiusB
+        // Step 8 (idx 7): Show A'-1, B'-1, A'-2 (idx 1) radiusA
+        // Step 9 (idx 8): Show A'-1, B'-1, A'-2, B'-2 (idx 1) radiusB
+        // Step 10+ (idx 9+): Show all arcs
+        
+        let shouldShowRadiusA = false;
+        let shouldShowRadiusB = false;
+        
+        if (showSteps && currentStep >= 5) {
+          if (currentStep === 5) {
+            // Step 6: Only A'-1 (radiusA for idx 0)
+            shouldShowRadiusA = (idx === 0);
+          } else if (currentStep === 6) {
+            // Step 7: A'-1 radiusA and B'-1 radiusB (both idx 0)
+            shouldShowRadiusA = (idx === 0);
+            shouldShowRadiusB = (idx === 0);
+          } else if (currentStep === 7) {
+            // Step 8: A'-1, B'-1, A'-2 radiusA (idx 0, 1)
+            shouldShowRadiusA = (idx === 0 || idx === 1);
+            shouldShowRadiusB = (idx === 0);
+          } else if (currentStep === 8) {
+            // Step 9: A'-1, B'-1, A'-2, B'-2 radiusB (idx 0, 1)
+            shouldShowRadiusA = (idx === 0 || idx === 1);
+            shouldShowRadiusB = (idx === 0 || idx === 1);
+          } else if (currentStep >= 9) {
+            // Step 10+: All arcs
+            shouldShowRadiusA = true;
+            shouldShowRadiusB = true;
+          }
+        } else if (!showSteps) {
+          // When not showing steps, show all
+          shouldShowRadiusA = true;
+          shouldShowRadiusB = true;
+        }
+        
+        // Draw construction arcs with radiusA
+        if (shouldShowRadiusA) {
           ctx.strokeStyle = "#e9d5ff";
           ctx.lineWidth = 0.5;
           ctx.setLineDash([2, 2]);
           
-          // Arc from A
+          // Arc from A with radiusA
           ctx.beginPath();
           ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 1.2, Math.PI * 1.8);
           ctx.stroke();
@@ -200,7 +235,32 @@ export default function ArcCircleConstruction() {
           ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 0.2, Math.PI * 0.8);
           ctx.stroke();
           
-          // Arc from B
+          // Arc from B with radiusA
+          ctx.beginPath();
+          ctx.arc(pointB_x, pointB_y, radiusA, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(pointB_x, pointB_y, radiusA, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.stroke();
+          
+          ctx.setLineDash([]);
+        }
+        
+        // Draw construction arcs with radiusB
+        if (shouldShowRadiusB) {
+          ctx.strokeStyle = "#e9d5ff";
+          ctx.lineWidth = 0.5;
+          ctx.setLineDash([2, 2]);
+          
+          // Arc from A with radiusB
+          ctx.beginPath();
+          ctx.arc(pointA_x, pointA_y, radiusB, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(pointA_x, pointA_y, radiusB, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.stroke();
+          
+          // Arc from B with radiusB
           ctx.beginPath();
           ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 1.2, Math.PI * 1.8);
           ctx.stroke();
