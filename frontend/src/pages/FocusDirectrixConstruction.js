@@ -504,22 +504,16 @@ export default function FocusDirectrixConstruction() {
               <CardContent>
                 <div className="space-y-3 text-gray-700">
                   <div>
-                    <strong>Directrix AB length:</strong> 200 mm
-                  </div>
-                  <div>
-                    <strong>Distance R to V:</strong> 39 mm
+                    <strong>Directrix AB length:</strong> Any length
                   </div>
                   <div>
                     <strong>Distance R to F:</strong> 65 mm (Focus)
                   </div>
                   <div>
-                    <strong>Perpendicular from V:</strong> 26 mm (both directions)
+                    <strong>Eccentricity given:</strong> 2/3
                   </div>
                   <div>
                     <strong>Number of parallel lines:</strong> 16 lines at 10 mm spacing
-                  </div>
-                  <div>
-                    <strong>Angled line length:</strong> 270 mm from R
                   </div>
                   <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                     <p className="text-sm">
@@ -528,6 +522,26 @@ export default function FocusDirectrixConstruction() {
                       The compass method with parallel lines provides accurate point locations that are
                       then connected to form the smooth ellipse curve.
                     </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-xl" style={{ fontFamily: "'Spectral', serif" }}>
+                  Calculations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 text-gray-700">
+                  <div className="space-y-2">
+                    <p><strong>1) RF = 65mm</strong></p>
+                    <p className="pl-4">To find V: VF/RV = 2/3</p>
+                    <p className="pl-4">2x + 3x = 65</p>
+                    <p className="pl-4">5x = 65</p>
+                    <p className="pl-4">x = 13</p>
+                    <p className="pl-4"><strong>So, VF = 26mm and RV = 39mm</strong></p>
                   </div>
                 </div>
               </CardContent>
