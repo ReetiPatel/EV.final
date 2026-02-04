@@ -17,11 +17,11 @@ export default function ArcCircleConstruction() {
     "Mark midpoint O of AB (perpendicular for calculation only - not drawn)",
     "From O, extend AO and BO by 17.5mm to mark endpoints A' and B'",
     "Mark 4 points from A to O at 10mm intervals (1,2,3,4) and repeat from B to O",
-    "Compass: radius A'-1 from A/B (arcs), radius B'-1 from A/B (intersecting arcs)",
-    "Compass: radius A'-2 from A/B (arcs), radius B'-2 from A/B (intersecting arcs)",
-    "Compass: radius A'-3 from A/B (arcs), radius B'-3 from A/B (intersecting arcs)",
-    "Compass: radius A'-4 from A/B (arcs), radius B'-4 from A/B (intersecting arcs)",
-    "Radius A'-O from A and B (minor axis points on vertical line)",
+    "Compass: radius A'-1, draw an arc from A as well as B",
+    "Compass: radius B'-1, draw an arc from A as well as B (intersecting arcs)",
+    "Compass: radius A'-2, draw an arc from A as well as B",
+    "Compass: radius B'-2, draw an arc from A as well as B",
+    "Repeat the same for A'-3, A'-4, B'-3 and B'-4",
     "Radius A'-A from A/B, radius B'-A from A/B (corner arcs)",
     "Connect all intersection points including minor axis to form smooth ellipse"
   ];
