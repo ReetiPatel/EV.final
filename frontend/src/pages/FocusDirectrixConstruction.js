@@ -12,10 +12,10 @@ export default function FocusDirectrixConstruction() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const steps = [
-    "Draw directrix AB of length 200mm, mark midpoint R, draw horizontal line from R to the right",
+    "Draw directrix AB of any length, mark midpoint R, draw horizontal line from R to the right",
     "From R, mark point V at 39mm and point F at 65mm on the horizontal line",
-    "Draw perpendicular line from V: 26mm upwards (V') and 26mm downwards (V*)",
-    "Draw two angled lines from R passing through V' and V* extending 270mm",
+    "Draw perpendicular line from V: VV'(upwards) = VV*(downwards) = VF (26mm)",
+    "Draw two angled lines from R passing through V' and V* extending to the construction area",
     "Draw 16 parallel lines to V'V* at 10mm intervals touching the angled lines",
     "Number intersection points: 1',2',3'... (downward) and 1,2,3... (upward)",
     "Mark horizontal line intersections as V1, V2, V3... V16 next to V",
