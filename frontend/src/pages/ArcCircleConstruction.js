@@ -435,11 +435,11 @@ export default function ArcCircleConstruction() {
           <Button
             data-testid="back-btn"
             variant="outline"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/methods")}
             className="inline-flex items-center gap-2"
           >
             <Home className="w-4 h-4" />
-            Back to Home
+            Back to Practical 2
           </Button>
         </div>
 
