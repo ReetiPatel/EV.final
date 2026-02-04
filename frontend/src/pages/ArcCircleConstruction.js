@@ -568,18 +568,6 @@ export default function ArcCircleConstruction() {
                   <div>
                     <strong>Point C location:</strong> AC = 75 mm, BC = 60 mm
                   </div>
-                  <div>
-                    <strong>Minor axis:</strong> 92 mm (46mm up, 46mm down from O)
-                  </div>
-                  <div>
-                    <strong>Ellipse endpoints:</strong> A' (left) to B' (right)
-                  </div>
-                  <div>
-                    <strong>Extension A' and B':</strong> 17.5 mm from O
-                  </div>
-                  <div>
-                    <strong>Marked points:</strong> 4 points at 10 mm intervals (1, 2, 3, 4)
-                  </div>
                   <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                     <p className="text-sm">
                       <strong>Method:</strong> This compass method uses arc intersections from points A and B
@@ -587,6 +575,34 @@ export default function ArcCircleConstruction() {
                       determine precise points on the ellipse, which are then connected smoothly to form the
                       complete curve.
                     </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white/90 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-xl" style={{ fontFamily: "'Spectral', serif" }}>
+                  Calculations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 text-gray-700">
+                  <div className="space-y-2">
+                    <p><strong>1) AC = 75mm, BC = 60mm</strong></p>
+                    <p className="pl-4">AC + BC = 135mm (Length of major axis)</p>
+                    <p className="pl-4">OA' = OB' = 135/2 mm</p>
+                    <p className="pl-4">⇒ 67.5mm</p>
+                    <p className="pl-4">OA + AA' = OB + BB' = 50 + x</p>
+                    <p className="pl-4">50 + x = 67.5</p>
+                    <p className="pl-4">x = 17.5mm</p>
+                    <p className="pl-4"><strong>So AA' = BB' = 17.5mm</strong></p>
+                  </div>
+                  <div className="space-y-2">
+                    <p><strong>2) Minor axis = √(67.5² - 50²)</strong></p>
+                    <p className="pl-4">= √(4556.25 - 2500)</p>
+                    <p className="pl-4">= √2056.25</p>
+                    <p className="pl-4">= <strong>45.3mm (approx)</strong></p>
                   </div>
                 </div>
               </CardContent>
