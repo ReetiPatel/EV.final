@@ -458,20 +458,13 @@ export default function FocusDirectrixConstruction() {
                 {showSteps && (
                   <div className="mt-6">
                     <div className="space-y-2">
-                      {steps.map((step, index) => (
-                        <div
-                          key={index}
-                          data-testid={`step-${index}`}
-                          className={`p-3 rounded-lg transition-all duration-300 ${
-                            index <= currentStep
-                              ? "bg-rose-100 border-l-4 border-rose-600"
-                              : "bg-gray-50"
-                          }`}
-                        >
-                          <span className="font-semibold mr-2">Step {index + 1}:</span>
-                          {step}
-                        </div>
-                      ))}
+                      <div
+                        data-testid={`step-${currentStep}`}
+                        className="p-4 rounded-lg bg-rose-100 border-l-4 border-rose-600"
+                      >
+                        <span className="font-semibold mr-2">Step {currentStep + 1}:</span>
+                        {steps[currentStep]}
+                      </div>
                     </div>
                   </div>
                 )}
