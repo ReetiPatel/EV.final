@@ -40,8 +40,8 @@ export default function FocusDirectrixConstruction() {
     ctx.clearRect(0, 0, width, height);
 
     // Setup parameters based on exact specifications
-    const scale = 3.0; // pixels per mm (adjusted for larger 1000px canvas)
-    const centerX = 180;
+    const scale = 3.6; // pixels per mm (adjusted for larger 1200px canvas)
+    const centerX = 200;
     const centerY = height / 2;
     
     // Given measurements in mm
