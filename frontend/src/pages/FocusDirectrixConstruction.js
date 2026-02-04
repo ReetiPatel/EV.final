@@ -246,8 +246,22 @@ export default function FocusDirectrixConstruction() {
           ellipsePoints.push({ x: vPoints[i].x, y: pointF_y - ellipse_y_up });
           ellipsePoints.push({ x: vPoints[i].x, y: pointF_y - ellipse_y_down });
 
-          // Draw small arcs showing compass marks
-          if (showSteps && currentStep >= 7 && i < 5) {
+          // Draw small arcs showing compass marks based on current step
+          // Step 8: Show only V1 arcs (i=0)
+          // Step 9: Show V1 and V2 arcs (i=0,1)
+          // Step 10+: Show all arcs
+          let shouldShowArc = false;
+          if (showSteps && currentStep >= 7) {
+            if (currentStep === 7) {
+              shouldShowArc = (i === 0); // Only V1
+            } else if (currentStep === 8) {
+              shouldShowArc = (i === 0 || i === 1); // V1 and V2
+            } else if (currentStep >= 9) {
+              shouldShowArc = true; // All arcs
+            }
+          }
+          
+          if (shouldShowArc) {
             ctx.beginPath();
             ctx.arc(pointF_x, pointF_y, radius, angle_to_up - 0.1, angle_to_up + 0.1);
             ctx.stroke();
