@@ -351,13 +351,20 @@ export default function ArcCircleConstruction() {
       ellipsePoints.push({ x: pointA_prime_x, y: pointA_prime_y });
     }
     
-    // Mark all ellipse points
+    // Mark all ellipse points - make them more visible
     if (currentStep >= 8 || !showSteps) {
       ctx.fillStyle = "#dc2626";
       ellipsePoints.forEach((point) => {
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI); // Increased size from 3 to 5
         ctx.fill();
+        
+        // Add white border for better visibility
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+        ctx.stroke();
       });
     }
     
