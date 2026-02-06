@@ -223,8 +223,8 @@ export default function ArcCircleConstruction() {
         
         // Draw construction arcs with radiusA
         if (shouldShowRadiusA) {
-          ctx.strokeStyle = "#e9d5ff";
-          ctx.lineWidth = 0.5;
+          ctx.strokeStyle = "#9333ea"; // Darker purple
+          ctx.lineWidth = 1.5; // Thicker line
           ctx.setLineDash([2, 2]);
           
           // Arc from A with radiusA
@@ -248,8 +248,8 @@ export default function ArcCircleConstruction() {
         
         // Draw construction arcs with radiusB
         if (shouldShowRadiusB) {
-          ctx.strokeStyle = "#e9d5ff";
-          ctx.lineWidth = 0.5;
+          ctx.strokeStyle = "#9333ea"; // Darker purple
+          ctx.lineWidth = 1.5; // Thicker line
           ctx.setLineDash([2, 2]);
           
           // Arc from A with radiusB
