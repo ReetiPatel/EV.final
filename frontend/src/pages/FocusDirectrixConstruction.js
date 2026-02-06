@@ -262,11 +262,14 @@ export default function FocusDirectrixConstruction() {
           }
           
           if (shouldShowArc) {
+            // For step 10+, draw longer arcs to show intersection clearly
+            const arcLength = (currentStep >= 9 && showSteps) ? 0.3 : 0.1;
+            
             ctx.beginPath();
-            ctx.arc(pointF_x, pointF_y, radius, angle_to_up - 0.1, angle_to_up + 0.1);
+            ctx.arc(pointF_x, pointF_y, radius, angle_to_up - arcLength, angle_to_up + arcLength);
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(pointF_x, pointF_y, radius, angle_to_down - 0.1, angle_to_down + 0.1);
+            ctx.arc(pointF_x, pointF_y, radius, angle_to_down - arcLength, angle_to_down + arcLength);
             ctx.stroke();
           }
         }
