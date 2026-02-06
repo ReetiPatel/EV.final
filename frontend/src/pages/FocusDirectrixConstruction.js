@@ -275,8 +275,8 @@ export default function FocusDirectrixConstruction() {
       // Add point V to close the ellipse
       ellipsePoints.push({ x: pointV_x, y: pointV_y });
 
-      // Mark ellipse points
-      if (currentStep >= 8 || !showSteps) {
+      // Mark ellipse points (only show when not in step 8)
+      if ((currentStep >= 9 || !showSteps) && currentStep !== 8) {
         ctx.fillStyle = "#dc2626";
         ellipsePoints.forEach((point) => {
           ctx.beginPath();
