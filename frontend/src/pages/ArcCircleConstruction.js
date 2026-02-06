@@ -223,24 +223,24 @@ export default function ArcCircleConstruction() {
         
         // Draw construction arcs with radiusA
         if (shouldShowRadiusA) {
-          ctx.strokeStyle = "#9333ea"; // Darker purple
-          ctx.lineWidth = 1.5; // Thicker line
+          ctx.strokeStyle = "#a855f7"; // Lighter purple
+          ctx.lineWidth = 1.2; // Slightly thinner
           ctx.setLineDash([2, 2]);
           
-          // Arc from A with radiusA
+          // Arc from A with radiusA - shorter arcs
           ctx.beginPath();
-          ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 1.3, Math.PI * 1.7);
           ctx.stroke();
           ctx.beginPath();
-          ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.arc(pointA_x, pointA_y, radiusA, Math.PI * 0.3, Math.PI * 0.7);
           ctx.stroke();
           
-          // Arc from B with radiusA
+          // Arc from B with radiusA - shorter arcs
           ctx.beginPath();
-          ctx.arc(pointB_x, pointB_y, radiusA, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.arc(pointB_x, pointB_y, radiusA, Math.PI * 1.3, Math.PI * 1.7);
           ctx.stroke();
           ctx.beginPath();
-          ctx.arc(pointB_x, pointB_y, radiusA, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.arc(pointB_x, pointB_y, radiusA, Math.PI * 0.3, Math.PI * 0.7);
           ctx.stroke();
           
           ctx.setLineDash([]);
@@ -248,24 +248,24 @@ export default function ArcCircleConstruction() {
         
         // Draw construction arcs with radiusB
         if (shouldShowRadiusB) {
-          ctx.strokeStyle = "#9333ea"; // Darker purple
-          ctx.lineWidth = 1.5; // Thicker line
+          ctx.strokeStyle = "#a855f7"; // Lighter purple
+          ctx.lineWidth = 1.2; // Slightly thinner
           ctx.setLineDash([2, 2]);
           
-          // Arc from A with radiusB
+          // Arc from A with radiusB - shorter arcs
           ctx.beginPath();
-          ctx.arc(pointA_x, pointA_y, radiusB, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.arc(pointA_x, pointA_y, radiusB, Math.PI * 1.3, Math.PI * 1.7);
           ctx.stroke();
           ctx.beginPath();
-          ctx.arc(pointA_x, pointA_y, radiusB, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.arc(pointA_x, pointA_y, radiusB, Math.PI * 0.3, Math.PI * 0.7);
           ctx.stroke();
           
-          // Arc from B with radiusB
+          // Arc from B with radiusB - shorter arcs
           ctx.beginPath();
-          ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 1.2, Math.PI * 1.8);
+          ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 1.3, Math.PI * 1.7);
           ctx.stroke();
           ctx.beginPath();
-          ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 0.2, Math.PI * 0.8);
+          ctx.arc(pointB_x, pointB_y, radiusB, Math.PI * 0.3, Math.PI * 0.7);
           ctx.stroke();
           
           ctx.setLineDash([]);
